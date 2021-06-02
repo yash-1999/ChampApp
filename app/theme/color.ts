@@ -61,4 +61,6 @@ export const color = {
    * white background
    */
   storybookTextColor: palette.black,
+
+  splashTextColor: "rgb(254, 254, 254)",
 }

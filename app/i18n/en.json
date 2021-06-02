@@ -27,6 +27,9 @@
   "demoListScreen": {
     "title": "Demo List"
   },
+  "splashScreen": {
+    "boxing": "BOXING"
+  },
   "storybook": {
     "placeholder": "Placeholder",
     "field": "Field"
