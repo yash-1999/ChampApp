@@ -28,7 +28,8 @@
     "title": "Demo List"
   },
   "splashScreen": {
-    "boxing": "BOXING"
+    "boxing": "BOXING",
+    "welcome": "Welcome Back,"
   },
   "storybook": {
     "placeholder": "Placeholder",

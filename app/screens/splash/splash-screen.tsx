@@ -1,4 +1,4 @@
-import React from "react"
+import React, { useState,useEffect } from "react"
 import { View, Image, ViewStyle, TextStyle, ImageStyle, SafeAreaView } from "react-native"
 import { useNavigation } from "@react-navigation/native"
 import { observer } from "mobx-react-lite"
@@ -6,9 +6,9 @@ import { Button, Header, Screen, Text, Wallpaper } from "../../components"
 import { color, spacing, typography } from "../../theme"
 const bowserLogo = require("./l1.png")
 
-const FULL: ViewStyle = { flex: 1 }
+const FULL: ViewStyle = { flex: 1 , backgroundColor: color.palette.black}
 const CONTAINER: ViewStyle = {
-    backgroundColor: color.transparent,
+    backgroundColor: color.palette.black,
     paddingHorizontal: spacing[4],
     opacity: 10,
   }
@@ -29,7 +29,7 @@ const BOWSER: ImageStyle = {
     maxHeight: 812,
   }
   const TEXT: TextStyle = {
-    color: "#BAB6C8",
+    color: color.palette.white,
     fontFamily: typography.primary,
   }
   const BOLD: TextStyle = { fontWeight: "bold" }
@@ -39,19 +39,51 @@ const BOWSER: ImageStyle = {
     fontSize: 56.7,
     //lineHeight: 38,
     textAlign: "left",
+    color: "rgb(254, 254, 254)",
+    maxWidth: 220,
+    maxHeight: 42.3,
+    marginLeft: 77.7,
+    marginRight: 77.3,
+    marginTop: 370,
+    marginBottom: 399.7,
+  }
+  const CONTENT: TextStyle = {
+    ...TEXT,
+    color: "rgb(254, 254, 254)",
+    fontSize: 12,
+    //lineHeight: 22,
+    //marginBottom: spacing[5],
+    textAlign: "left",
+    letterSpacing: 5.76,
+    maxWidth: 140,
+    maxHeight: 9,
+    marginLeft: 117.7,
+    marginRight: 117.3,
+    marginTop: 421.7,
+    marginBottom: 381.3,
   }
 
 export const SplashScreen = observer(function SplashScreen() {
     const navigation = useNavigation()
-    const nextScreen = () => navigation.navigate("demo")
+    //const nextScreen = () => navigation.navigate("demo")
+    useEffect(()=>{
+      setTimeout(() => {
+          //checklog();
+          navigation.navigate("login")
+      }, 5000);
+  },[])
   
     return (
       <View testID="SplashScreen" style={FULL}>
           <Wallpaper style={WALL}/>
-          <Screen style={CONTAINER} preset="scroll" backgroundColor={color.transparent}>
+          <Screen style={CONTAINER} preset="scroll" backgroundColor={color.palette.black}>
           <Image source={bowserLogo} style={BOWSER} />
+          
           <Text style={TITLE} preset="header" tx="splashScreen.boxing" />
-          <Text style={TITLE} text="Your new app, " />
+          {/* <Text style={TITLE} text="Your new app, " /> */}
+          <Text style={CONTENT}>
+          BY TATVASOFT
+        </Text>
 
           </Screen>
         </View>
