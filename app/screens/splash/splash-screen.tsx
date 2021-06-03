@@ -4,6 +4,7 @@ import { useNavigation } from "@react-navigation/native"
 import { observer } from "mobx-react-lite"
 import { Button, Header, Screen, Text, Wallpaper } from "../../components"
 import { color, spacing, typography } from "../../theme"
+import { scale, verticalScale } from "../../utils/scale"
 const bowserLogo = require("./l1.png")
 
 const FULL: ViewStyle = { flex: 1 , backgroundColor: color.palette.black}
@@ -15,9 +16,11 @@ const CONTAINER: ViewStyle = {
 const BOWSER: ImageStyle = {
     alignSelf: "center",
     //marginVertical: spacing[5],
-    marginTop: 272,
+    //marginTop: 272,
+    marginTop: verticalScale(272),
     marginBottom: 454.7,
-    maxWidth: 85.3,
+    // maxWidth: 85.3,
+    maxWidth: scale(85.3),
     maxHeight: 85.3,
   }
   const WALL: ImageStyle = {
