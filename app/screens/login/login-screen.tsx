@@ -1,10 +1,12 @@
 import React, { useState,useEffect } from "react"
-import { View, Image, ViewStyle, TextStyle, ImageStyle, SafeAreaView } from "react-native"
+import { View, Image, ViewStyle, TextStyle, ImageStyle, SafeAreaView, Alert } from "react-native"
 import { useNavigation } from "@react-navigation/native"
 import { observer } from "mobx-react-lite"
-import { Button, Header, Screen, Text, Wallpaper } from "../../components"
+import { BulletItem, Button, Header, Screen, Text, TextField, Wallpaper } from "../../components"
 import { color, spacing, typography } from "../../theme"
-import { TextInput } from "react-native-gesture-handler"
+//import { TextInput } from "react-native-gesture-handler"
+import validate from "validate.js"
+import { verticalScale } from "../../utils/scale"
 const bowserLogo = require("./l1.png")
 
 const FULL: ViewStyle = { flex: 1, flexDirection: "column", backgroundColor: color.background }
@@ -91,7 +93,7 @@ const BOWSER: ImageStyle = {
   const CONTINUE: ViewStyle = {
     //paddingVertical: spacing[4],
     //paddingHorizontal: spacing[4],
-    
+    backgroundColor: "rgb(238, 206, 0)",
     
   }
   const CONTINUE_TEXT: TextStyle = {
@@ -103,7 +105,7 @@ const BOWSER: ImageStyle = {
     //marginTop: 20.7,
     textAlign: "left"
   }
-  const FOOTER: ViewStyle = { backgroundColor: "rgb(238, 206, 0)",marginTop: 33.3, 
+  const FOOTER: ViewStyle = { marginTop: 33.3, 
   marginLeft: 33.3, maxHeight: 53.3 , maxWidth: 308.3 }
   const FOOTER_CONTENT: ViewStyle = {
     //paddingVertical: spacing[4],
@@ -133,7 +135,8 @@ const BOWSER: ImageStyle = {
         //maxHeight: 29.4,
         //maxWidth: 308.3,
         //paddingTop: 13.7,
-        marginTop: 15.7,
+        //marginTop: 15.7,
+        marginTop: verticalScale(15.7),
         fontSize: 16,
         textAlign: "left",
         color: "rgb(254, 254, 254)",
@@ -162,7 +165,7 @@ const BOWSER: ImageStyle = {
       //maxHeight: 29.4,
       //maxWidth: 308.3,
       //paddingTop: 13.7,
-      marginTop: 15.7,
+      marginTop: verticalScale(20),
       fontSize: 16,
       textAlign: "left",
       color: "rgb(254, 254, 254)",
@@ -172,21 +175,278 @@ const BOWSER: ImageStyle = {
       //borderBottomColor: "rgb(255, 255, 255)",
     }
 
+    const FBS: ViewStyle = {
+      //paddingVertical: spacing[4],
+      //paddingHorizontal: spacing[4],
+      backgroundColor: "rgb(66, 103, 178)",
+      
+    }
+    const FBST: TextStyle = {
+      ...TEXT,
+      ...BOLD,
+      fontSize: 15.3,
+      //letterSpacing: 3.07,
+      color: "rgb(254, 254, 254)",
+      //marginTop: 20.7,
+      textAlign: "left"
+    }
+    const FB: ViewStyle = { marginTop: 160.7, 
+    marginLeft: 33.3, maxHeight: 53.3 , maxWidth: 308.3, }
+    const FB_CONT: ViewStyle = {
+      //paddingVertical: spacing[4],
+      //paddingHorizontal: spacing[4],
+    }
+
+    const GMS: ViewStyle = {
+      //paddingVertical: spacing[4],
+      //paddingHorizontal: spacing[4],
+      backgroundColor: "rgb(178, 49, 33)",
+      
+    }
+    const GMST: TextStyle = {
+      ...TEXT,
+      ...BOLD,
+      fontSize: 15.3,
+      //letterSpacing: 3.07,
+      color: "rgb(254, 254, 254)",
+      //marginTop: 20.7,
+      textAlign: "left"
+    }
+    const GM: ViewStyle = { marginTop: 10, 
+    marginLeft: 33.3, maxHeight: 53.3 , maxWidth: 308.3, }
+    const GM_CONT: ViewStyle = {
+      //paddingVertical: spacing[4],
+      //paddingHorizontal: spacing[4],
+    }
+
 export const LoginScreen = observer(function LoginScreen() {
     const navigation = useNavigation()
     //const nextScreen = () => navigation.navigate("demo")
-//     useEffect(()=>{
-//       setTimeout(() => {
-//           //checklog();
-//           navigation.navigate("")
-//       }, 5000);
-//   },[])
+
+    const Users = [
+      {
+          id: 1, 
+          email: 'user1@email.com',
+          username: 'user1', 
+          password: 'password@', 
+          userToken: 'token123'
+      },
+      {
+          id: 2, 
+          email: 'user2@email.com',
+          username: 'user2', 
+          password: 'pass1234', 
+          userToken: 'token12345'
+      },
+      {
+          id: 3, 
+          email: 'testuser@email.com',
+          username: 'testuser', 
+          password: 'testpass', 
+          userToken: 'testtoken'
+      },
+  ];
+
+    const [data, setData] = React.useState({
+      username: '',
+      password: '',
+      check_textInputChange: false,
+      secureTextEntry: true,
+      isValidUser: true,
+      //isValidEmail: true,
+      isValidPassword1: true,
+      isValidPassword2: true,
+      isValidPassword3: true,
+  });
+
+  const [isValidPassLength, setIsValidPassLength] = React.useState(true);
+  const [isValidPassAplhanu, setIsValidPassAlphanu] = React.useState(true);
+  const [isValidPassSpechar, setIsValidPassSpechar] = React.useState(true);
+
+  const textInputChange = (val) => {
+    const reg = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+    // if( val.trim().length >= 4 ) {
+      if( reg.test(val)) {
+        setData({
+            ...data,
+            username: val,
+            check_textInputChange: true,
+            isValidUser: true
+        });
+    } else {
+        setData({
+            ...data,
+            username: val,
+            check_textInputChange: false,
+            isValidUser: false
+        });
+    }
+}
+
+const handlePasswordChange = (val) => {
+  //const re = /^(?=.*\d)(?=.*[!@#$%^&*])(?=.*[a-z])(?=.*[A-Z]).{8,20}$/;
+  //
+//   if( /[!"#$%&'()*+,-./:;<=>?@[\]^_`{|}~]/.test(val)) {
+    
+    
+//     if( /[0-9a-zA-Z]/.test(val)) {
+      
+//       if( val.trim().length >= 8 ) {
+//         setData({
+//                  ...data,
+//                  password: val,
+//                  isValidPassword1: true
+//              });
+//       }
+//           setData({
+//         ...data,
+//         password: val,
+//         isValidPassword2: true
+//     });
+//   } 
+//   else {
+//       setData({
+//           ...data,
+//           password: val,
+//           isValidPassword2: false
+//       });
+//   }
+//   setData({
+//     ...data,
+//     password: val,
+//     isValidPassword3: true
+// });
+    
+// } else {
+//     setData({
+//         ...data,
+//         password: val,
+//         isValidPassword1: false,
+//         isValidPassword2: false,
+//         isValidPassword3: false
+//     });
+// }
+  //
+
+  if( val.trim().length >= 8) {
+      setData({
+          ...data,
+          password: val,
+          //isValidPassword1: true
+          
+         
+          
+      });
+      setIsValidPassLength(true);
+      console.log("length log");
+  
+  } else {
+      setData({
+          ...data,
+          password: val,
+          isValidPassword1: false
+      });
+      setIsValidPassLength(false);
+      console.log("length log 2");
+  }
+  
+  if( /[0-9a-zA-Z]/.test(val)) {
+    setData({
+        ...data,
+        password: val,
+        isValidPassword2: true
+    });
+    setIsValidPassAlphanu(true);
+    console.log("alphanu log");
+} else {
+    setData({
+        ...data,
+        password: val,
+        isValidPassword2: false
+    });
+    setIsValidPassAlphanu(false);
+    console.log("aplhanu log 2");
+}
+
+if( /[!"#$%&'()*+,-./:;<=>?@[\]^_`{|}~]/.test(val)) {
+  setData({
+      ...data,
+      password: val,
+      isValidPassword3: true
+  });
+  setIsValidPassSpechar(true);
+  console.log("spe. log");
+} else {
+  setData({
+      ...data,
+      password: val,
+      isValidPassword3: false
+  });
+  setIsValidPassSpechar(false);
+  console.log("spe. log 2");
+}
+setTimeout(() => {
+  console.log("fun", data);
+}, 200);
+
+}
+
+const updateSecureTextEntry = () => {
+  setData({
+      ...data,
+      secureTextEntry: !data.secureTextEntry
+  });
+}
+
+const handleValidUser = (val) => {
+  if( val.trim().length >= 4 ) {
+      setData({
+          ...data,
+          isValidUser: true
+      });
+  } else {
+      setData({
+          ...data,
+          isValidUser: false
+      });
+  }
+}
+
+const loginHandle = (userName, password) => {
+
+  const foundUser = Users.filter( item => {
+      return userName == item.username && password == item.password;
+  } );
+
+  if ( data.username.length == 0 || data.password.length == 0 ) {
+      Alert.alert('Wrong Input!', 'Username or password field cannot be empty.', [
+          {text: 'Okay'}
+      ]);
+      return;
+  }
+
+  else if ( foundUser.length == 0 ) {
+      Alert.alert('Invalid User!', 'Username or password is incorrect.', [
+          {text: 'Okay'}
+      ]);
+      return;
+  }
+  //signIn(foundUser);
+  //if ( data.username == "user1" || data.password == "password" ) 
+  else{
+    Alert.alert('User detail is correct!', 'correct details.', [
+        {text: 'Okay'}
+    ]);
+    return;
+}
+}
+
   
     return (
       <View style={FULL}>
           {/* <Wallpaper style={WALL}/> */}
           <Wallpaper preset="cover" />
-          <Screen style={CONTAINER} preset="scroll" backgroundColor={color.transparent}>
+          <Screen style={CONTAINER} preset="fixed" backgroundColor={color.transparent}>
           <Image source={bowserLogo} style={BOWSER} />
           <View style={TITLE_WRAPPER}>
                 <Text style={TITLE} preset="header" tx="splashScreen.welcome" />
@@ -195,51 +455,84 @@ export const LoginScreen = observer(function LoginScreen() {
          
           <SafeAreaView style={EMAIL}>
         <View style={EMAIL_CONT}>
-          {/* <Button
-            testID="next-screen-button"
-            style={CONTINUE}
-            textStyle={CONTINUE_TEXT}
-            tx="welcomeScreen.continue"
-            onPress={nextScreen}
-          /> */}
           <Text style={EA} text="Email  Address" />
-          <TextInput style={EATI} placeholder="Wallace E. Kyser" placeholderTextColor="rgb(254, 254, 254)" />
+          <TextField style={EATI} placeholder="Wallace E. Kyser" placeholderTextColor="rgb(254, 254, 254)" 
+          onChangeText={(val) => textInputChange(val)}
+          onEndEditing={(e)=>handleValidUser(e.nativeEvent.text)}
+          />
+          
         </View>
+        { data.isValidUser ? null : 
+            
+            <Text>Please Enter Valid Email Address</Text>
+            
+            }
       </SafeAreaView>
 
       <SafeAreaView style={PASS}>
         <View style={PASS_CONT}>
-          {/* <Button
-            testID="next-screen-button"
-            style={CONTINUE}
-            textStyle={CONTINUE_TEXT}
-            tx="welcomeScreen.continue"
-            onPress={nextScreen}
-          /> */}
           <Text style={PA} text="Password" />
-          <TextInput style={PATI} secureTextEntry={true} placeholder="Password" placeholderTextColor="rgb(254, 254, 254)" />
+          <TextField style={PATI} secureTextEntry={data.secureTextEntry ? true : false} placeholder="Password" placeholderTextColor="rgb(254, 254, 254)" onChangeText={(val) => handlePasswordChange(val)} />
         </View>
+        
+        { !isValidPassLength && 
+            
+            <Text>Password must be 8 characters long.</Text>
+            
+            }
+           
+        { !isValidPassAplhanu && 
+            
+            <Text>alphanumeric.</Text>
+            
+            }
+           
+        { !isValidPassSpechar && 
+            
+            <Text>special characters.</Text>
+            
+            }
       </SafeAreaView>
 
       <SafeAreaView style={FOOTER}>
         <View style={FOOTER_CONTENT}>
           <Button
-            testID="next-screen-button"
+            //testID="next-screen-button"
             style={CONTINUE}
             textStyle={CONTINUE_TEXT}
             // tx="welcomeScreen.continue"
             text="SIGN IN"
             //onPress={nextScreen}
+            onPress={() => {loginHandle( data.username, data.password )}}
           />
         </View>
       </SafeAreaView>
       
-          
-          {/* <Text style={TITLE} preset="header" tx="splashScreen.boxing" /> */}
-          {/* <Text style={TITLE} text="Your new app, " /> */}
-          {/* <Text style={CONTENT}>
-          BY TATVASOFT
-        </Text> */}
+      <SafeAreaView style={FB}>
+        <View style={FB_CONT}>
+          <Button
+            //testID="next-screen-button"
+            style={FBS}
+            textStyle={FBST}
+            // tx="welcomeScreen.continue"
+            text="Login with Facebook"
+            //onPress={nextScreen}
+          />
+        </View>
+      </SafeAreaView>
+
+      <SafeAreaView style={GM}>
+        <View style={GM_CONT}>
+          <Button
+            //testID="next-screen-button"
+            style={GMS}
+            textStyle={GMST}
+            // tx="welcomeScreen.continue"
+            text="Login with Gmail"
+            //onPress={nextScreen}
+          />
+        </View>
+      </SafeAreaView>
 
           </Screen>
         </View>

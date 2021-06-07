@@ -4,10 +4,11 @@ import { color, spacing, typography } from "../../theme"
 import { translate, TxKeyPath } from "../../i18n"
 import { Text } from "../text/text"
 import { flatten } from "ramda"
+import { verticalScale } from "../../utils/scale"
 
 // the base styling for the container
 const CONTAINER: ViewStyle = {
-  paddingVertical: spacing[3],
+  paddingVertical: verticalScale(0),
 }
 
 // the base styling for the TextInput
@@ -15,8 +16,8 @@ const INPUT: TextStyle = {
   fontFamily: typography.primary,
   color: color.text,
   minHeight: 44,
-  fontSize: 18,
-  backgroundColor: color.palette.white,
+  fontSize: 16,
+  backgroundColor: color.transparent,
 }
 
 // currently we have no presets, but that changes quickly when you build your app.
