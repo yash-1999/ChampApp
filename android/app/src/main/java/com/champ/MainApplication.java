@@ -7,14 +7,19 @@ import android.app.Application;
 import android.content.Context;
 import com.facebook.react.PackageList;
 import com.facebook.react.ReactApplication;
+
+import org.devio.rn.splashscreen.SplashScreen;
 import org.devio.rn.splashscreen.SplashScreenReactPackage;
 import com.facebook.react.ReactInstanceManager;
 import com.facebook.react.ReactNativeHost;
 import com.facebook.react.ReactPackage;
+import com.facebook.react.shell.MainReactPackage;
 import com.facebook.soloader.SoLoader;
 import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 import java.util.Arrays;
+import android.os.Bundle; // here
+import com.facebook.react.ReactActivity;
  
 import org.unimodules.adapters.react.ModuleRegistryAdapter;
 import org.unimodules.adapters.react.ReactModuleRegistryProvider;
@@ -41,23 +46,23 @@ public class MainApplication extends Application implements ReactApplication {
                     new MainReactPackage(),
             new SplashScreenReactPackage()  //here 
             );
-        }ssss
+        }
 
-        @Override
-        protected List<ReactPackage> getPackages() {
-          @SuppressWarnings("UnnecessaryLocalVariable")
-          List<ReactPackage> packages = new PackageList(this).getPackages();
+        //@Override
+        //protected List<ReactPackage> getPackages() {
+          //@SuppressWarnings("UnnecessaryLocalVariable")
+          //List<ReactPackage> packages = new PackageList(this).getPackages();
           // Packages that cannot be autolinked yet can be added manually here, for example:
           // packages.add(new MyReactNativePackage());
 
           // Add unimodules
-          List<ReactPackage> unimodules = Arrays.<ReactPackage>asList(
-            new ModuleRegistryAdapter(mModuleRegistryProvider)
-          );
-          packages.addAll(unimodules);
+          //List<ReactPackage> unimodules = Arrays.<ReactPackage>asList(
+          //  new ModuleRegistryAdapter(mModuleRegistryProvider)
+         // );
+         // packages.addAll(unimodules);
           
-          return packages;
-        }
+         // return packages;
+       // }
 
         @Override
         protected String getJSMainModuleName() {
@@ -69,11 +74,7 @@ public class MainApplication extends Application implements ReactApplication {
   public ReactNativeHost getReactNativeHost() {
     return mReactNativeHost;
   }
-   @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        SplashScreen.show(this);  // here 
-        super.onCreate(savedInstanceState);
-    }
+
 
   @Override
   public void onCreate() {
