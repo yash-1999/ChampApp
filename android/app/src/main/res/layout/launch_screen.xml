@@ -2,5 +2,25 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
-    <ImageView android:layout_width="match_parent" android:layout_height="match_parent" android:src="@layout/launch_screen" android:scaleType="centerCrop" />
+    <ImageView android:layout_width="match_parent" android:layout_height="match_parent" android:src="@mipmap/layer2" android:scaleType="centerCrop" />
+    <ImageView android:layout_width="wrap_content" android:layout_height="wrap_content" android:margintop=272 android:src="@mipmap/l1" android:scaleType="centerCrop" />
+    <TextView
+  android:layout_width="wrap_content"
+  android:layout_height="wrap_content"
+  <!-- android:fontFamily="@font/aero_swfte" -->
+  android:textStyle="normal"
+  android:textSize="56.7sp"
+  android:textColor="#fefefe"
+  tools:text="Boxing"
+/>
+<TextView
+  android:layout_width="wrap_content"
+  android:layout_height="wrap_content"
+  <!-- android:fontFamily="@font/sf_pro_display_light" -->
+  android:textStyle="normal"
+  android:textSize="12sp"
+  android:textColor="#fefefe"
+  android:letterSpacing="0.48"
+  tools:text="by Tatvasoft"
+/>
 </RelativeLayout>

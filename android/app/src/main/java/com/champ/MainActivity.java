@@ -2,7 +2,7 @@ package com.champ;
 
 import com.facebook.react.ReactActivity;
 import android.os.Bundle; // here
-import com.facebook.react.ReactActivity;
+//import com.facebook.react.ReactActivity;
 
 import org.devio.rn.splashscreen.SplashScreen;
 

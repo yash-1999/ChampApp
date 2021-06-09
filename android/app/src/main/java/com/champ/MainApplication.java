@@ -8,7 +8,7 @@ import android.content.Context;
 import com.facebook.react.PackageList;
 import com.facebook.react.ReactApplication;
 
-import org.devio.rn.splashscreen.SplashScreen;
+//import org.devio.rn.splashscreen.SplashScreen;
 import org.devio.rn.splashscreen.SplashScreenReactPackage;
 import com.facebook.react.ReactInstanceManager;
 import com.facebook.react.ReactNativeHost;
@@ -26,6 +26,8 @@ import org.unimodules.adapters.react.ReactModuleRegistryProvider;
 import org.unimodules.core.interfaces.SingletonModule;
 import org.devio.rn.splashscreen.SplashScreenReactPackage;
 
+import co.apptailor.googlesignin.RNGoogleSigninPackage;  // <--- import
+
 public class MainApplication extends Application implements ReactApplication {
   private final ReactModuleRegistryProvider mModuleRegistryProvider = new ReactModuleRegistryProvider(new BasePackageList().getPackageList(), null);
 
@@ -40,29 +42,46 @@ public class MainApplication extends Application implements ReactApplication {
           return BuildConfig.DEBUG;
         }
 
+        // @Override
+        // protected List<ReactPackage> getPackages() {
+
+        //      @SuppressWarnings("UnnecessaryLocalVariable")
+        //   List<ReactPackage> packages = new PackageList(this).getPackages();
+             
+
+        //   List<ReactPackage> unimodules = Arrays.<ReactPackage>asList(
+        //    new ModuleRegistryAdapter(mModuleRegistryProvider)
+        //  );
+        //  packages.addAll(unimodules);
+
+        // Add unimodules
+            // List<ReactPackage> unimodules = Arrays.<ReactPackage>asList(
+            //   new ModuleRegistryAdapter(mModuleRegistryProvider)
+            // );
+            // packages.addAll(unimodules);
+
+            //   return Arrays.<ReactPackage>asList(
+            //           new MainReactPackage(),
+            //           new RNGoogleSigninPackage() // <-- this needs to be in the list
+            //   new SplashScreenReactPackage()  //here
+            //   );
+        //}
+
         @Override
         protected List<ReactPackage> getPackages() {
-            return Arrays.<ReactPackage>asList(
-                    new MainReactPackage(),
-            new SplashScreenReactPackage()  //here 
-            );
-        }
+          @SuppressWarnings("UnnecessaryLocalVariable")
+          List<ReactPackage> packages = new PackageList(this).getPackages();
+          //Packages that cannot be autolinked yet can be added manually here, for example:
+         // packages.add(new MyReactNativePackage());
 
-        //@Override
-        //protected List<ReactPackage> getPackages() {
-          //@SuppressWarnings("UnnecessaryLocalVariable")
-          //List<ReactPackage> packages = new PackageList(this).getPackages();
-          // Packages that cannot be autolinked yet can be added manually here, for example:
-          // packages.add(new MyReactNativePackage());
-
-          // Add unimodules
-          //List<ReactPackage> unimodules = Arrays.<ReactPackage>asList(
-          //  new ModuleRegistryAdapter(mModuleRegistryProvider)
-         // );
-         // packages.addAll(unimodules);
+          //Add unimodules
+          List<ReactPackage> unimodules = Arrays.<ReactPackage>asList(
+           new ModuleRegistryAdapter(mModuleRegistryProvider)
+         );
+         packages.addAll(unimodules);
           
-         // return packages;
-       // }
+         return packages;
+       }
 
         @Override
         protected String getJSMainModuleName() {

@@ -7,6 +7,9 @@ import { color, spacing, typography } from "../../theme"
 //import { TextInput } from "react-native-gesture-handler"
 import validate from "validate.js"
 import { verticalScale } from "../../utils/scale"
+
+import {GoogleSignin} from "@react-native-community/google-signin"
+
 const bowserLogo = require("./l1.png")
 
 const FULL: ViewStyle = { flex: 1, flexDirection: "column", backgroundColor: color.background }
@@ -219,6 +222,11 @@ const BOWSER: ImageStyle = {
       //paddingHorizontal: spacing[4],
     }
 
+GoogleSignin.configure({
+  webClientId : '550742417006-7tbsu92h08l5ds2hm8vrlbqdu4sai21s.apps.googleusercontent.com',
+  offlineAccess : true
+})
+
 export const LoginScreen = observer(function LoginScreen() {
     const navigation = useNavigation()
     //const nextScreen = () => navigation.navigate("demo")
@@ -262,6 +270,26 @@ export const LoginScreen = observer(function LoginScreen() {
   const [isValidPassLength, setIsValidPassLength] = React.useState(true);
   const [isValidPassAplhanu, setIsValidPassAlphanu] = React.useState(true);
   const [isValidPassSpechar, setIsValidPassSpechar] = React.useState(true);
+
+  const [isGmail, setIsGmail] = React.useState({
+    userGoogleInfo : {},
+    loaded: false,
+  });
+
+  const signIn = async () => {
+    try {
+      await GoogleSignin.hasPlayServices();
+      const userInfo = await GoogleSignin.signIn();
+      setIsGmail({
+          ...isGmail,
+          userGoogleInfo : userInfo,
+          loaded: true
+      });
+      console.log(userInfo)
+    } catch (error) {
+      console.log("hi",error.message);
+    }
+  };
 
   const textInputChange = (val) => {
     const reg = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
@@ -446,7 +474,7 @@ const loginHandle = (userName, password) => {
       <View style={FULL}>
           {/* <Wallpaper style={WALL}/> */}
           <Wallpaper preset="cover" />
-          <Screen style={CONTAINER} preset="fixed" backgroundColor={color.transparent}>
+          <Screen style={CONTAINER} preset="scroll" backgroundColor={color.transparent}>
           <Image source={bowserLogo} style={BOWSER} />
           <View style={TITLE_WRAPPER}>
                 <Text style={TITLE} preset="header" tx="splashScreen.welcome" />
@@ -529,9 +557,15 @@ const loginHandle = (userName, password) => {
             textStyle={GMST}
             // tx="welcomeScreen.continue"
             text="Login with Gmail"
-            //onPress={nextScreen}
+            onPress={signIn}
           />
         </View>
+        {/* { isGmail.loaded && 
+            
+            // <Text>Password must be 8 characters long.</Text>
+            console.log(isGmail.userGoogleInfo)
+            
+            } */}
       </SafeAreaView>
 
           </Screen>
