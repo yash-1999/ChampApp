@@ -3,24 +3,40 @@
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
     <ImageView android:layout_width="match_parent" android:layout_height="match_parent" android:src="@mipmap/layer2" android:scaleType="centerCrop" />
-    <ImageView android:layout_width="wrap_content" android:layout_height="wrap_content" android:margintop=272 android:src="@mipmap/l1" android:scaleType="centerCrop" />
-    <TextView
-  android:layout_width="wrap_content"
-  android:layout_height="wrap_content"
-  <!-- android:fontFamily="@font/aero_swfte" -->
-  android:textStyle="normal"
-  android:textSize="56.7sp"
-  android:textColor="#fefefe"
-  tools:text="Boxing"
-/>
-<TextView
-  android:layout_width="wrap_content"
-  android:layout_height="wrap_content"
-  <!-- android:fontFamily="@font/sf_pro_display_light" -->
-  android:textStyle="normal"
-  android:textSize="12sp"
-  android:textColor="#fefefe"
-  android:letterSpacing="0.48"
-  tools:text="by Tatvasoft"
-/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_centerVertical="true"
+        android:gravity="center"
+        android:orientation="vertical">
+
+            <ImageView android:layout_width="wrap_content" android:layout_height="wrap_content" android:src="@mipmap/l1" android:scaleType="centerCrop" />
+             <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="sans-serif"
+            android:text="BOXING"
+            android:textColor="#FEFEFE"
+            android:textSize="56dp"
+            android:textStyle="bold"
+            android:layout_marginTop="-5dp"
+            android:layout_marginBottom="-10dp"
+            android:includeFontPadding="false"
+            android:typeface="sans" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="40dp"
+            android:text="BY TATVASOFT"
+            android:letterSpacing="0.3"
+            android:textColor="#FEFEFE"
+            android:textSize="12dp"
+            android:textStyle="bold"
+            android:includeFontPadding="false"
+            android:typeface="sans" />
+            
+        </LinearLayout>
+    
 </RelativeLayout>

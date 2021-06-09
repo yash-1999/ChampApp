@@ -222,10 +222,7 @@ const BOWSER: ImageStyle = {
       //paddingHorizontal: spacing[4],
     }
 
-GoogleSignin.configure({
-  webClientId : '550742417006-7tbsu92h08l5ds2hm8vrlbqdu4sai21s.apps.googleusercontent.com',
-  offlineAccess : true
-})
+
 
 export const LoginScreen = observer(function LoginScreen() {
     const navigation = useNavigation()
@@ -275,6 +272,13 @@ export const LoginScreen = observer(function LoginScreen() {
     userGoogleInfo : {},
     loaded: false,
   });
+
+  useEffect(() => {
+    GoogleSignin.configure({
+      webClientId : '997533835128-v7dbjc7jtiopj99bpnbjh63u2dffrf65.apps.googleusercontent.com',
+      offlineAccess : true
+    })
+  },[]) 
 
   const signIn = async () => {
     try {
