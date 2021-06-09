@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "997533835128",
+    "project_id": "react-316304",
+    "storage_bucket": "react-316304.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:997533835128:android:9eb6d3f62342d85616b28d",
+        "android_client_info": {
+          "package_name": "com.champ"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "997533835128-m75l8m1bjlc2fu6fba8ic34e3dfk7pid.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.champ",
+            "certificate_hash": "d7cd67a9b11814ed8fa5f82b5ab683a61952dc61"
+          }
+        },
+        {
+          "client_id": "997533835128-mu1c18jsqpjqekgmnsb5vsblsrqg4vr3.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBVxz-fxNdSOmdgyqgASXWVVipg7kCYoOM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "997533835128-mu1c18jsqpjqekgmnsb5vsblsrqg4vr3.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

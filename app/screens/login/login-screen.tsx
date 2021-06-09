@@ -8,7 +8,7 @@ import { color, spacing, typography } from "../../theme"
 import validate from "validate.js"
 import { verticalScale } from "../../utils/scale"
 
-import {GoogleSignin} from "@react-native-community/google-signin"
+import {GoogleSignin, statusCodes} from '@react-native-google-signin/google-signin'
 
 const bowserLogo = require("./l1.png")
 
@@ -275,11 +275,12 @@ export const LoginScreen = observer(function LoginScreen() {
 
   useEffect(() => {
     GoogleSignin.configure({
-      webClientId : '997533835128-v7dbjc7jtiopj99bpnbjh63u2dffrf65.apps.googleusercontent.com',
+      //scopes: ['https://www.googleapis.com/auth/drive.readonly'],
+      webClientId : '997533835128-mu1c18jsqpjqekgmnsb5vsblsrqg4vr3.apps.googleusercontent.com',
       offlineAccess : true
-    })
+    });
   },[]) 
-
+//997533835128-m75l8m1bjlc2fu6fba8ic34e3dfk7pid.apps.googleusercontent.com
   const signIn = async () => {
     try {
       await GoogleSignin.hasPlayServices();

@@ -139,6 +139,7 @@ android {
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1
         versionName "1.0"
+        multiDexEnabled true
     }
     splits {
         abi {
@@ -193,7 +194,7 @@ dependencies {
 
     implementation "androidx.swiperefreshlayout:swiperefreshlayout:1.0.0"
 
-    //implementation(project(":react-native-google-signin"))
+    implementation(project(":react-native-google-signin"))
 
     addUnimodulesDependencies()
 
@@ -229,5 +230,5 @@ task copyDownloadableDepsToLibs(type: Copy) {
 }
 
 apply from: file("../../node_modules/@react-native-community/cli-platform-android/native_modules.gradle"); applyNativeModulesAppBuildGradle(project)
-//apply plugin: 'com.google.gms.google-services' // <--- this should be the last line
+apply plugin: 'com.google.gms.google-services' // <--- this should be the last line
 
