@@ -28,6 +28,10 @@ import org.devio.rn.splashscreen.SplashScreenReactPackage;
 
 import co.apptailor.googlesignin.RNGoogleSigninPackage;  // <--- import
 
+import com.facebook.reactnative.androidsdk.FBSDKPackage;
+import com.facebook.FacebookSdk;
+import com.facebook.appevents.AppEventsLogger;
+
 public class MainApplication extends Application implements ReactApplication {
   private final ReactModuleRegistryProvider mModuleRegistryProvider = new ReactModuleRegistryProvider(new BasePackageList().getPackageList(), null);
 

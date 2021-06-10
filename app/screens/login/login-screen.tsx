@@ -10,6 +10,10 @@ import { verticalScale } from "../../utils/scale"
 
 import {GoogleSignin, statusCodes} from '@react-native-google-signin/google-signin'
 
+import { LoginButton, AccessToken } from 'react-native-fbsdk-next';
+import { Profile } from "react-native-fbsdk-next";
+import { LoginManager } from "react-native-fbsdk-next";
+
 const bowserLogo = require("./l1.png")
 
 const FULL: ViewStyle = { flex: 1, flexDirection: "column", backgroundColor: color.background }
@@ -296,6 +300,36 @@ export const LoginScreen = observer(function LoginScreen() {
     }
   };
 
+  const currentProfile = () => {
+    LoginManager.logInWithPermissions(["public_profile"]).then(
+      function(result) {
+        if (result.isCancelled) {
+          console.log("Login cancelled");
+        } else {
+          console.log(
+            "Login success with permissions: " +
+              result.grantedPermissions.toString()
+          );
+        }
+      },
+      function(error) {
+        console.log("Login fail with error: " + error);
+      }
+    );
+
+    Profile.getCurrentProfile().then(
+      function(currentProfile) {
+        if (currentProfile) {
+          console.log("The current logged user is: " +
+            currentProfile.name
+            + ". His profile id is: " +
+            currentProfile.userID
+          );
+        }
+      }
+    );
+  };
+
   const textInputChange = (val) => {
     const reg = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
     // if( val.trim().length >= 4 ) {
@@ -543,13 +577,30 @@ const loginHandle = (userName, password) => {
       
       <SafeAreaView style={FB}>
         <View style={FB_CONT}>
+        {/* <LoginButton
+          onLoginFinished={
+            (error, result) => {
+              if (error) {
+                console.log("login has error: " + result);
+              } else if (result.isCancelled) {
+                console.log("login is cancelled.");
+              } else {
+                AccessToken.getCurrentAccessToken().then(
+                  (data) => {
+                    console.log(data.accessToken.toString())
+                  }
+                )
+              }
+            }
+          }
+          onLogoutFinished={() => console.log("logout.")}/> */}
           <Button
             //testID="next-screen-button"
             style={FBS}
             textStyle={FBST}
             // tx="welcomeScreen.continue"
             text="Login with Facebook"
-            //onPress={nextScreen}
+            onPress={currentProfile}
           />
         </View>
       </SafeAreaView>
