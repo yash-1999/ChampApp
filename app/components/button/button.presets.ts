@@ -1,19 +1,22 @@
 import { ViewStyle, TextStyle } from "react-native"
 import { color, spacing } from "../../theme"
+import { moderateVerticalScale, scale, verticalScale } from "../../utils/scale"
 
 /**
  * All text will start off looking like this.
  */
 const BASE_VIEW: ViewStyle = {
-  paddingVertical: spacing[2],
-  paddingHorizontal: spacing[2],
-  borderRadius: 4,
+  paddingVertical: verticalScale(21),
+  paddingHorizontal: scale(10),
+  //height: verticalScale(53.3),
+  //borderRadius: 4,
   justifyContent: "center",
   alignItems: "center",
 }
 
 const BASE_TEXT: TextStyle = {
-  paddingHorizontal: spacing[3],
+  //paddingHorizontal: spacing[3],
+  
 }
 
 /**
@@ -39,7 +42,7 @@ export const viewPresets: Record<string, ViewStyle> = {
 }
 
 export const textPresets: Record<ButtonPresetNames, TextStyle> = {
-  primary: { ...BASE_TEXT, fontSize: 9, color: color.palette.white } as TextStyle,
+  primary: { ...BASE_TEXT, fontSize: moderateVerticalScale(15.3),lineHeight: verticalScale(15.3), color: color.palette.white } as TextStyle,
   link: {
     ...BASE_TEXT,
     color: color.text,

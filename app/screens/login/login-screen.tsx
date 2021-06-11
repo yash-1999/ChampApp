@@ -6,7 +6,7 @@ import { BulletItem, Button, Header, Screen, Text, TextField, Wallpaper } from "
 import { color, spacing, typography } from "../../theme"
 //import { TextInput } from "react-native-gesture-handler"
 import validate from "validate.js"
-import { verticalScale } from "../../utils/scale"
+import { moderateVerticalScale, scale, verticalScale } from "../../utils/scale"
 
 import {GoogleSignin, statusCodes} from '@react-native-google-signin/google-signin'
 
@@ -19,17 +19,26 @@ const bowserLogo = require("./l1.png")
 const FULL: ViewStyle = { flex: 1, flexDirection: "column", backgroundColor: color.background }
 const CONTAINER: ViewStyle = {
     backgroundColor: color.transparent,
+    //flex: 1,
+    //flexDirection: "column",
+    paddingHorizontal: scale(32.7),
     //paddingHorizontal: spacing[4],
     //opacity: 10,
   }
+  const TEXT: TextStyle = {
+    color: color.palette.white,
+    fontFamily: typography.primary,
+  }
+  const BOLD: TextStyle = { fontWeight: "bold" }
+  const LOTE: ViewStyle = {
+    //flex: 0.26,
+    //flexDirection: "column",
+    marginTop: verticalScale(34.7),
+  }
 const BOWSER: ImageStyle = {
-    marginLeft: 33.3,
-    //marginRight: 275,
-    //marginVertical: spacing[5],
-    marginTop: 78.7,
-    //marginBottom: 666.7,
-    maxWidth: 66.7,
-    maxHeight: 66.7,
+  width: scale(66.7),
+  height: verticalScale(66.7),
+   marginHorizontal: scale(0.6),
   }
   const WALL: ImageStyle = {
     //alignSelf: "center",
@@ -39,48 +48,26 @@ const BOWSER: ImageStyle = {
     maxWidth: 375,
     maxHeight: 812,
   }
-  const TEXT: TextStyle = {
-    color: color.palette.white,
-    fontFamily: typography.primary,
-  }
-  const BOLD: TextStyle = { fontWeight: "bold" }
+
   const TITLE_WRAPPER: ViewStyle = {
     ...TEXT,
-    //textAlign: "left",
-    //maxWidth: 221.7,
-    //maxHeight: 45.7,
-    marginLeft: 32.7,
-    //marginRight: 120.7,
-    marginTop: 18.7,
-    //marginBottom: 602.3,
+    marginTop: verticalScale(18.7),
   }
   const TITLE: TextStyle = {
     ...TEXT,
     ...BOLD,
-    fontSize: 30,
-    //lineHeight: 38,
+    fontSize: moderateVerticalScale(30),
+    
     textAlign: "left",
     color: "rgb(254, 254, 254)",
-    // maxWidth: 220,
-    // maxHeight: 42.3,
-    // marginLeft: 77.7,
-    // marginRight: 77.3,
-    // marginTop: 370,
-    // marginBottom: 399.7,
   }
   const TITLEE: TextStyle = {
     ...TEXT,
     ...BOLD,
-    fontSize: 16.7,
+    fontSize: moderateVerticalScale(16.7),
     //lineHeight: 38,
     textAlign: "left",
     color: "rgb(254, 254, 254)",
-    // maxWidth: 220,
-    // maxHeight: 42.3,
-    // marginLeft: 77.7,
-    // marginRight: 77.3,
-    // marginTop: 370,
-    // marginBottom: 399.7,
   }
   const CONTENT: TextStyle = {
     ...TEXT,
@@ -106,17 +93,35 @@ const BOWSER: ImageStyle = {
   const CONTINUE_TEXT: TextStyle = {
     ...TEXT,
     ...BOLD,
-    fontSize: 15.3,
-    letterSpacing: 3.07,
+    //fontSize: moderateVerticalScale(15.3),
+    letterSpacing: scale(3.07),
     color: "rgb(0, 0, 0)",
     //marginTop: 20.7,
     textAlign: "left"
   }
-  const FOOTER: ViewStyle = { marginTop: 33.3, 
-  marginLeft: 33.3, maxHeight: 53.3 , maxWidth: 308.3 }
+  const BU: ViewStyle = {
+    //flex: 0.4,
+    //flexDirection: "column",
+    //marginTop: verticalScale(33.3), 
+    //marginLeft: 33.3,
+    //marginHorizontal: scale(0.6),
+     //maxHeight: verticalScale(53.3) ,
+      //maxWidth: 308.3 
+  }
+  const FOOTER: ViewStyle = { 
+  }
   const FOOTER_CONTENT: ViewStyle = {
-    //paddingVertical: spacing[4],
-    //paddingHorizontal: spacing[4],
+    marginTop: verticalScale(33.3), 
+    //marginLeft: 33.3,
+    marginHorizontal: scale(0.6),
+     //maxHeight: verticalScale(53.3) ,
+      //maxWidth: 308.3 
+  }
+  const EMPA: ViewStyle = {
+    //flex: 0.34,
+    //flexDirection: "column",
+    marginTop: verticalScale(46.3),
+    marginHorizontal: scale(0.6),
   }
   const EMAIL: ViewStyle = { //marginTop: 46.3, 
     //marginBottom: 501.7
@@ -124,62 +129,53 @@ const BOWSER: ImageStyle = {
     marginLeft: 33.3, 
 }
   const EMAIL_CONT: ViewStyle = {
-    //paddingVertical: spacing[4],
-    //paddingHorizontal: spacing[4],
-    
   }
   const EA: TextStyle = { 
-      //marginLeft: 33.3,
-      //marginRight: 264.3,
-      //maxHeight: 9.3,
-      //maxWidth: 77.3,
-      fontSize: 12,
+      fontSize: moderateVerticalScale(12),
       textAlign: "left",
     }
     const EATI: TextStyle = { 
-        //marginLeft: 33.3,
-        //marginRight: 33.3,
-        //maxHeight: 29.4,
-        //maxWidth: 308.3,
-        //paddingTop: 13.7,
-        //marginTop: 15.7,
-        marginTop: verticalScale(15.7),
-        fontSize: 16,
+
+        //marginTop: verticalScale(15.7),
+        fontSize: moderateVerticalScale(16),
         textAlign: "left",
         color: "rgb(254, 254, 254)",
-        maxWidth: 308.3,
-        borderBottomWidth: 0.7,
+        //maxWidth: 308.3,
+        borderBottomWidth: scale(0.7),
         borderBottomColor: "rgb(254, 254, 254)",
         //borderBottomColor: "rgb(255, 255, 255)",
       }
   const PASS: ViewStyle = { marginTop: 32.7, 
     marginLeft: 33.3,  }
   const PASS_CONT: ViewStyle = {
-    //paddingVertical: spacing[4],
-    //paddingHorizontal: spacing[4],
+    marginTop: verticalScale(32.7),
   }
   const PA: TextStyle = { 
-    //marginLeft: 33.3,
-    //marginRight: 264.3,
-    //maxHeight: 9.3,
-    //maxWidth: 77.3,
-    fontSize: 12,
+    fontSize: moderateVerticalScale(12),
     textAlign: "left",
   }
   const PATI: TextStyle = { 
-      //marginLeft: 33.3,
-      //marginRight: 33.3,
-      //maxHeight: 29.4,
-      //maxWidth: 308.3,
-      //paddingTop: 13.7,
-      marginTop: verticalScale(20),
-      fontSize: 16,
+
+      //marginTop: verticalScale(20),
+      fontSize: moderateVerticalScale(16),
       textAlign: "left",
       color: "rgb(254, 254, 254)",
-      maxWidth: 308.3,
-      borderBottomWidth: 0.7,
+      //maxWidth: 308.3,
+      borderBottomWidth: scale(0.7),
       borderBottomColor: "rgb(254, 254, 254)",
       //borderBottomColor: "rgb(255, 255, 255)",
+    }
+
+    const ERROR: TextStyle = { 
+      marginTop: verticalScale(9.7),
+      fontSize: moderateVerticalScale(12),
+      textAlign: "left",
+      color: "#c53838",
+    }
+    const ERRORR: TextStyle = { 
+      fontSize: moderateVerticalScale(12),
+      textAlign: "left",
+      color: "#c53838",
     }
 
     const FBS: ViewStyle = {
@@ -191,17 +187,19 @@ const BOWSER: ImageStyle = {
     const FBST: TextStyle = {
       ...TEXT,
       ...BOLD,
-      fontSize: 15.3,
+      //fontSize: moderateVerticalScale(15.3),
       //letterSpacing: 3.07,
       color: "rgb(254, 254, 254)",
       //marginTop: 20.7,
       textAlign: "left"
     }
-    const FB: ViewStyle = { marginTop: 160.7, 
-    marginLeft: 33.3, maxHeight: 53.3 , maxWidth: 308.3, }
+    const FB: ViewStyle = {  }
     const FB_CONT: ViewStyle = {
-      //paddingVertical: spacing[4],
-      //paddingHorizontal: spacing[4],
+      marginTop: verticalScale(104.7), 
+      //marginLeft: 33.3, 
+      marginHorizontal: scale(0.6),
+      //maxHeight: 53.3 , 
+      //maxWidth: 308.3,
     }
 
     const GMS: ViewStyle = {
@@ -213,17 +211,19 @@ const BOWSER: ImageStyle = {
     const GMST: TextStyle = {
       ...TEXT,
       ...BOLD,
-      fontSize: 15.3,
+      //fontSize: moderateVerticalScale(15.3),
       //letterSpacing: 3.07,
       color: "rgb(254, 254, 254)",
       //marginTop: 20.7,
       textAlign: "left"
     }
-    const GM: ViewStyle = { marginTop: 10, 
-    marginLeft: 33.3, maxHeight: 53.3 , maxWidth: 308.3, }
+    const GM: ViewStyle = { }
     const GM_CONT: ViewStyle = {
-      //paddingVertical: spacing[4],
-      //paddingHorizontal: spacing[4],
+      marginTop: verticalScale(10), 
+      marginHorizontal: scale(0.6),
+    //marginLeft: 33.3,
+     //maxHeight: 53.3 , 
+     //maxWidth: 308.3, 
     }
 
 
@@ -512,59 +512,63 @@ const loginHandle = (userName, password) => {
     return (
       <View style={FULL}>
           {/* <Wallpaper style={WALL}/> */}
+          
           <Wallpaper preset="cover" />
           <Screen style={CONTAINER} preset="scroll" backgroundColor={color.transparent}>
-          <Image source={bowserLogo} style={BOWSER} />
-          <View style={TITLE_WRAPPER}>
-                <Text style={TITLE} preset="header" tx="splashScreen.welcome" />
-                <Text style={TITLEE} text="sign in to continue" />
+
+          <View style={LOTE}>
+            <Image source={bowserLogo} style={BOWSER} />
+            <View style={TITLE_WRAPPER}>
+                  <Text style={TITLE} preset="header" tx="splashScreen.welcome" />
+                  <Text style={TITLEE} text="sign in to continue" />
+            </View>
           </View>
          
-          <SafeAreaView style={EMAIL}>
+        <View style={EMPA}> 
+         
         <View style={EMAIL_CONT}>
-          <Text style={EA} text="Email  Address" />
-          <TextField style={EATI} placeholder="Wallace E. Kyser" placeholderTextColor="rgb(254, 254, 254)" 
+          {/* <Text style={EA} text="Email  Address" /> */}
+          <TextField label="Email Address" placeholder="Enter Email Address" placeholderTextColor="rgb(254, 254, 254) " 
           onChangeText={(val) => textInputChange(val)}
           onEndEditing={(e)=>handleValidUser(e.nativeEvent.text)}
           />
-          
         </View>
         { data.isValidUser ? null : 
             
-            <Text>Please Enter Valid Email Address</Text>
+            <Text style={ERROR}>Please Enter Valid Email Address</Text>
             
             }
-      </SafeAreaView>
+      
 
-      <SafeAreaView style={PASS}>
+      
         <View style={PASS_CONT}>
-          <Text style={PA} text="Password" />
-          <TextField style={PATI} secureTextEntry={data.secureTextEntry ? true : false} placeholder="Password" placeholderTextColor="rgb(254, 254, 254)" onChangeText={(val) => handlePasswordChange(val)} />
+          {/* <Text style={PA} text="Password" /> */}
+          <TextField label="Password" secureTextEntry={data.secureTextEntry ? true : false} placeholder="Password" placeholderTextColor="rgb(254, 254, 254)" onChangeText={(val) => handlePasswordChange(val)} />
         </View>
         
         { !isValidPassLength && 
             
-            <Text>Password must be 8 characters long.</Text>
+            <Text style={ERROR}>Password must be 8 characters long.</Text>
             
             }
            
         { !isValidPassAplhanu && 
             
-            <Text>alphanumeric.</Text>
+            <Text style={ERRORR}>alphanumeric.</Text>
             
             }
            
         { !isValidPassSpechar && 
             
-            <Text>special characters.</Text>
+            <Text style={ERRORR}>special characters.</Text>
             
             }
-      </SafeAreaView>
+     
+      </View>
 
-      <SafeAreaView style={FOOTER}>
+      <View style={BU}>
         <View style={FOOTER_CONTENT}>
           <Button
-            //testID="next-screen-button"
             style={CONTINUE}
             textStyle={CONTINUE_TEXT}
             // tx="welcomeScreen.continue"
@@ -573,9 +577,9 @@ const loginHandle = (userName, password) => {
             onPress={() => {loginHandle( data.username, data.password )}}
           />
         </View>
-      </SafeAreaView>
+     
       
-      <SafeAreaView style={FB}>
+      
         <View style={FB_CONT}>
         {/* <LoginButton
           onLoginFinished={
@@ -603,9 +607,9 @@ const loginHandle = (userName, password) => {
             onPress={currentProfile}
           />
         </View>
-      </SafeAreaView>
+      
 
-      <SafeAreaView style={GM}>
+      
         <View style={GM_CONT}>
           <Button
             //testID="next-screen-button"
@@ -616,15 +620,17 @@ const loginHandle = (userName, password) => {
             onPress={signIn}
           />
         </View>
+
         {/* { isGmail.loaded && 
             
             // <Text>Password must be 8 characters long.</Text>
             console.log(isGmail.userGoogleInfo)
             
             } */}
-      </SafeAreaView>
+      </View>
 
           </Screen>
+          
         </View>
   )
 })

@@ -4,25 +4,37 @@ import { color, spacing, typography } from "../../theme"
 import { translate, TxKeyPath } from "../../i18n"
 import { Text } from "../text/text"
 import { flatten } from "ramda"
-import { verticalScale } from "../../utils/scale"
+import { moderateVerticalScale, scale, verticalScale } from "../../utils/scale"
 
 // the base styling for the container
 const CONTAINER: ViewStyle = {
-  paddingVertical: verticalScale(0),
+  //paddingVertical: verticalScale(0),
+  //backgroundColor: "red",
+      borderBottomWidth: verticalScale(0.7),
+      borderBottomColor: "rgb(254, 254, 254)",
 }
 
 // the base styling for the TextInput
 const INPUT: TextStyle = {
   fontFamily: typography.primary,
   color: color.text,
-  minHeight: 44,
-  fontSize: 16,
+  //minHeight: verticalScale(44),
+  height: verticalScale(42),
+  fontSize: moderateVerticalScale(16),
   backgroundColor: color.transparent,
+  padding: 0,
 }
 
 // currently we have no presets, but that changes quickly when you build your app.
 const PRESETS: { [name: string]: ViewStyle } = {
   default: {},
+}
+
+const LABLE: TextStyle = { 
+  fontSize: moderateVerticalScale(12),
+  textAlign: "left",
+  color: color.palette.white,
+  fontFamily: typography.primary,
 }
 
 export interface TextFieldProps extends TextInputProps {
@@ -84,9 +96,11 @@ export function TextField(props: TextFieldProps) {
   const inputStyles = flatten([INPUT, inputStyleOverride])
   const actualPlaceholder = placeholderTx ? translate(placeholderTx) : placeholder
 
+
+
   return (
     <View style={containerStyles}>
-      <Text preset="fieldLabel" tx={labelTx} text={label} />
+      <Text preset="fieldLabel" tx={labelTx} text={label} style={LABLE} />
       <TextInput
         placeholder={actualPlaceholder}
         placeholderTextColor={color.palette.lighterGrey}
