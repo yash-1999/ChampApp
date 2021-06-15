@@ -42,7 +42,7 @@ export const viewPresets: Record<string, ViewStyle> = {
 }
 
 export const textPresets: Record<ButtonPresetNames, TextStyle> = {
-  primary: { ...BASE_TEXT, fontSize: moderateVerticalScale(15.3),lineHeight: verticalScale(15.3), color: color.palette.white } as TextStyle,
+  primary: { ...BASE_TEXT, fontSize: verticalScale(15.3),lineHeight: verticalScale(15.3), color: color.palette.white } as TextStyle,
   link: {
     ...BASE_TEXT,
     color: color.text,

@@ -1,5 +1,5 @@
-import React, { useState,useEffect } from "react"
-import { View, Image, ViewStyle, TextStyle, ImageStyle, SafeAreaView, Alert } from "react-native"
+import React, { useState,useEffect, useRef } from "react"
+import { View, Image, ViewStyle, TextStyle, ImageStyle, SafeAreaView, Alert, StatusBar } from "react-native"
 import { useNavigation } from "@react-navigation/native"
 import { observer } from "mobx-react-lite"
 import { BulletItem, Button, Header, Screen, Text, TextField, Wallpaper } from "../../components"
@@ -13,6 +13,10 @@ import {GoogleSignin, statusCodes} from '@react-native-google-signin/google-sign
 import { LoginButton, AccessToken } from 'react-native-fbsdk-next';
 import { Profile } from "react-native-fbsdk-next";
 import { LoginManager } from "react-native-fbsdk-next";
+import { Colors } from "react-native/Libraries/NewAppScreen"
+
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { AuthContext } from '../../components/context/context';
 
 const bowserLogo = require("./l1.png")
 
@@ -30,6 +34,22 @@ const CONTAINER: ViewStyle = {
     fontFamily: typography.primary,
   }
   const BOLD: TextStyle = { fontWeight: "bold" }
+
+  const UP: ViewStyle = {
+    justifyContent: "space-between",
+    //flex: 0.26,
+    //flexDirection: "column",
+    //marginTop: verticalScale(34.7),
+  }
+  const BOTTOM: ViewStyle = {
+    flex: 1,
+    justifyContent: "flex-end",
+    //backgroundColor : "red",
+    //flex: 0.26,
+    //flexDirection: "column",
+   // marginTop: verticalScale(34.7),
+  }
+
   const LOTE: ViewStyle = {
     //flex: 0.26,
     //flexDirection: "column",
@@ -39,6 +59,7 @@ const BOWSER: ImageStyle = {
   width: scale(66.7),
   height: verticalScale(66.7),
    marginHorizontal: scale(0.6),
+   resizeMode: "contain",
   }
   const WALL: ImageStyle = {
     //alignSelf: "center",
@@ -56,7 +77,7 @@ const BOWSER: ImageStyle = {
   const TITLE: TextStyle = {
     ...TEXT,
     ...BOLD,
-    fontSize: moderateVerticalScale(30),
+    fontSize: verticalScale(30),
     
     textAlign: "left",
     color: "rgb(254, 254, 254)",
@@ -64,7 +85,7 @@ const BOWSER: ImageStyle = {
   const TITLEE: TextStyle = {
     ...TEXT,
     ...BOLD,
-    fontSize: moderateVerticalScale(16.7),
+    fontSize: verticalScale(16.7),
     //lineHeight: 38,
     textAlign: "left",
     color: "rgb(254, 254, 254)",
@@ -131,13 +152,13 @@ const BOWSER: ImageStyle = {
   const EMAIL_CONT: ViewStyle = {
   }
   const EA: TextStyle = { 
-      fontSize: moderateVerticalScale(12),
+      fontSize: verticalScale(12),
       textAlign: "left",
     }
     const EATI: TextStyle = { 
 
         //marginTop: verticalScale(15.7),
-        fontSize: moderateVerticalScale(16),
+        fontSize: verticalScale(16),
         textAlign: "left",
         color: "rgb(254, 254, 254)",
         //maxWidth: 308.3,
@@ -157,7 +178,7 @@ const BOWSER: ImageStyle = {
   const PATI: TextStyle = { 
 
       //marginTop: verticalScale(20),
-      fontSize: moderateVerticalScale(16),
+      fontSize: verticalScale(16),
       textAlign: "left",
       color: "rgb(254, 254, 254)",
       //maxWidth: 308.3,
@@ -168,12 +189,12 @@ const BOWSER: ImageStyle = {
 
     const ERROR: TextStyle = { 
       marginTop: verticalScale(9.7),
-      fontSize: moderateVerticalScale(12),
+      fontSize: verticalScale(12),
       textAlign: "left",
       color: "#c53838",
     }
     const ERRORR: TextStyle = { 
-      fontSize: moderateVerticalScale(12),
+      fontSize: verticalScale(12),
       textAlign: "left",
       color: "#c53838",
     }
@@ -195,7 +216,7 @@ const BOWSER: ImageStyle = {
     }
     const FB: ViewStyle = {  }
     const FB_CONT: ViewStyle = {
-      marginTop: verticalScale(104.7), 
+      //marginTop: verticalScale(104.7), 
       //marginLeft: 33.3, 
       marginHorizontal: scale(0.6),
       //maxHeight: 53.3 , 
@@ -259,6 +280,7 @@ export const LoginScreen = observer(function LoginScreen() {
     const [data, setData] = React.useState({
       username: '',
       password: '',
+      //token: '',
       check_textInputChange: false,
       secureTextEntry: true,
       isValidUser: true,
@@ -285,7 +307,7 @@ export const LoginScreen = observer(function LoginScreen() {
     });
   },[]) 
 //997533835128-m75l8m1bjlc2fu6fba8ic34e3dfk7pid.apps.googleusercontent.com
-  const signIn = async () => {
+  const signInGmail = async () => {
     try {
       await GoogleSignin.hasPlayServices();
       const userInfo = await GoogleSignin.signIn();
@@ -329,6 +351,8 @@ export const LoginScreen = observer(function LoginScreen() {
       }
     );
   };
+
+  const { signIn } = React.useContext(AuthContext);
 
   const textInputChange = (val) => {
     const reg = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
@@ -482,7 +506,7 @@ const handleValidUser = (val) => {
 const loginHandle = (userName, password) => {
 
   const foundUser = Users.filter( item => {
-      return userName == item.username && password == item.password;
+      return userName == item.username && password == item.password ;
   } );
 
   if ( data.username.length == 0 || data.password.length == 0 ) {
@@ -498,24 +522,50 @@ const loginHandle = (userName, password) => {
       ]);
       return;
   }
-  //signIn(foundUser);
+  signIn(foundUser);
   //if ( data.username == "user1" || data.password == "password" ) 
-  else{
-    Alert.alert('User detail is correct!', 'correct details.', [
-        {text: 'Okay'}
-    ]);
-    return;
-}
+  //else{
+    // Alert.alert('User detail is correct!', 'correct details.', [
+    //     {text: 'Okay'}
+    // ]);
+
+
+    //navigation.navigate("dashboard")
+    // async (value) => {
+    //   try {
+    //     await AsyncStorage.setItem('token', 'f')
+    //     console.log("correct hai")
+    //     navigation.navigate("root")
+    //   } catch (e) {
+    //     // saving error
+    //     console.log("error hai",e)
+    //   }
+    // }
+
+    //return;
+//}
+  // signIn(foundUser);
 }
 
+const ref_input2 = useRef(null);
+//const ref_input3 = useRef();
   
     return (
       <View style={FULL}>
           {/* <Wallpaper style={WALL}/> */}
           
+          <StatusBar
+        //animated={true}
+        backgroundColor="transparent"
+        translucent={true}
+        // barStyle={statusBarStyle}
+        // showHideTransition={statusBarTransition}
+        // hidden={hidden} 
+         />
+          
           <Wallpaper preset="cover" />
-          <Screen style={CONTAINER} preset="scroll" backgroundColor={color.transparent}>
-
+          <Screen style={CONTAINER} preset="fixed" backgroundColor={color.transparent}>
+          <View style={UP}>
           <View style={LOTE}>
             <Image source={bowserLogo} style={BOWSER} />
             <View style={TITLE_WRAPPER}>
@@ -531,6 +581,9 @@ const loginHandle = (userName, password) => {
           <TextField label="Email Address" placeholder="Enter Email Address" placeholderTextColor="rgb(254, 254, 254) " 
           onChangeText={(val) => textInputChange(val)}
           onEndEditing={(e)=>handleValidUser(e.nativeEvent.text)}
+          autoFocus={true}
+        returnKeyType="next"
+        onSubmitEditing={() => ref_input2.current.focus()}
           />
         </View>
         { data.isValidUser ? null : 
@@ -543,7 +596,11 @@ const loginHandle = (userName, password) => {
       
         <View style={PASS_CONT}>
           {/* <Text style={PA} text="Password" /> */}
-          <TextField label="Password" secureTextEntry={data.secureTextEntry ? true : false} placeholder="Password" placeholderTextColor="rgb(254, 254, 254)" onChangeText={(val) => handlePasswordChange(val)} />
+          <TextField label="Password" secureTextEntry={data.secureTextEntry ? true : false} placeholder="Password" placeholderTextColor="rgb(254, 254, 254)" onChangeText={(val) => handlePasswordChange(val)} 
+          forwardedRef={ref_input2}
+          returnKeyType={"done"}
+          onSubmitEditing={() => {loginHandle( data.username, data.password )}}
+          />
         </View>
         
         { !isValidPassLength && 
@@ -566,7 +623,7 @@ const loginHandle = (userName, password) => {
      
       </View>
 
-      <View style={BU}>
+      {/* <View style={BU}> */}
         <View style={FOOTER_CONTENT}>
           <Button
             style={CONTINUE}
@@ -577,9 +634,9 @@ const loginHandle = (userName, password) => {
             onPress={() => {loginHandle( data.username, data.password )}}
           />
         </View>
-     
+        </View>
       
-      
+      <View style={BOTTOM}>
         <View style={FB_CONT}>
         {/* <LoginButton
           onLoginFinished={
@@ -617,7 +674,7 @@ const loginHandle = (userName, password) => {
             textStyle={GMST}
             // tx="welcomeScreen.continue"
             text="Login with Gmail"
-            onPress={signIn}
+            onPress={signInGmail}
           />
         </View>
 
@@ -627,7 +684,8 @@ const loginHandle = (userName, password) => {
             console.log(isGmail.userGoogleInfo)
             
             } */}
-      </View>
+        </View>
+      {/* </View> */}
 
           </Screen>
           

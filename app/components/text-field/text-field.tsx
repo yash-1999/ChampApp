@@ -20,7 +20,7 @@ const INPUT: TextStyle = {
   color: color.text,
   //minHeight: verticalScale(44),
   height: verticalScale(42),
-  fontSize: moderateVerticalScale(16),
+  fontSize: verticalScale(16),
   backgroundColor: color.transparent,
   padding: 0,
 }
@@ -31,7 +31,7 @@ const PRESETS: { [name: string]: ViewStyle } = {
 }
 
 const LABLE: TextStyle = { 
-  fontSize: moderateVerticalScale(12),
+  fontSize: verticalScale(12),
   textAlign: "left",
   color: color.palette.white,
   fontFamily: typography.primary,
@@ -74,6 +74,8 @@ export interface TextFieldProps extends TextInputProps {
   preset?: keyof typeof PRESETS
 
   forwardedRef?: any
+
+  
 }
 
 /**

@@ -31,6 +31,10 @@
     "boxing": "BOXING",
     "welcome": "Welcome Back,"
   },
+  "dashBoardScreen": {
+    "dashboard": "Dashboard",
+    "welcome": "Welcome Back,"
+  },
   "storybook": {
     "placeholder": "Placeholder",
     "field": "Field"
