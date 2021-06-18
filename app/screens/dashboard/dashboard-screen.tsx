@@ -1,6 +1,6 @@
-import React, { useState,useEffect } from "react"
-import { View, Image, ViewStyle, TextStyle, ImageStyle, SafeAreaView, StatusBar, TouchableOpacity } from "react-native"
-import { DrawerActions, useNavigation } from "@react-navigation/native"
+import React, { useState,useEffect, useCallback } from "react"
+import { View, Image, ViewStyle, TextStyle, ImageStyle, SafeAreaView, StatusBar, TouchableOpacity, FlatList } from "react-native"
+import { DrawerActions, useIsFocused, useNavigation } from "@react-navigation/native"
 import { observer } from "mobx-react-lite"
 import { Button, Header, Screen, Text, Wallpaper } from "../../components"
 import { color, spacing, typography } from "../../theme"
@@ -8,6 +8,7 @@ import { scale, verticalScale } from "../../utils/scale"
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { styles } from "react-native-fbsdk-next/types/FBLoginButton"
 import { TabNavigator, DrawerContent } from "../../navigators"
+import { useStores } from "../../models"
 
 const FULL: ViewStyle = { flex: 1, flexDirection: "column", backgroundColor: color.background}
 const CONTAINER: ViewStyle = {
@@ -77,7 +78,21 @@ const BOWSER: ImageStyle = {
     const navigation = useNavigation()
     //const nextScreen = () => navigation.navigate("demo")
 
+    const { catagoryData } = useStores();
+    const isFocused = useIsFocused()
+    useEffect(() => {
+      if(isFocused){
+        catagoryData.getMainCategoryData(0);
+        console.tron.log("hi",catagoryData.mainCatagory)
+      }
+       
+    },[isFocused]) 
   
+    const extractKey = useCallback(
+      ({ id }) => '' + id,
+      [],
+    );
+
     return (
       <View style={FULL}>
           <StatusBar
@@ -91,13 +106,45 @@ const BOWSER: ImageStyle = {
                           //leftIcon="back"
                           rightIcon="back"
               />
-              <View style={{ flex: 1, justifyContent: 'center' }}>
-        <Text style={{color:"black"}}>Dashboard!</Text>
-        <View style={{flex: 1, justifyContent: "flex-end", position: "relative", marginLeft: scale(-10), marginBottom: verticalScale(-125) }}>
+              {/* <View style={{ flex: 1, justifyContent: 'center' }}>
+        <Text style={{color:"black"}}>Dashboard!</Text> */}
+        {/* <View style={{flex: 1, justifyContent: "flex-end", position: "relative", marginLeft: scale(-10), marginBottom: verticalScale(-125) }}>
                 <Image source={require("./sahpe.png")} resizeMode="contain" />
-                {/* <Image source={require("./sahpe.png")} resizeMode="contain" /> */}
+                
+              </View> */}
+      {/* </View> */}
+
+      
+      <View style={FOOTER_CONTENT}>
+      <FlatList 
+          data = {catagoryData.mainCatagory}
+          renderItem={({item}) => (
+            // <View>
+            //   <Text style={{ fontSize: 20, color: 'white' }}>{item.name}</Text>
+            // </View>
+            <View style={FOOTER}>
+              <View>
+                <Button
+                  style={CONTINUE}
+                  textStyle={CONTINUE_TEXT}
+                  // tx="welcomeScreen.continue"
+                  text={item.name}
+                  //onPress={nextScreen}
+                  //onPress={() => {loginHandle( data.username, data.password )}}
+                  onPress={() => navigation.dispatch(DrawerActions.openDrawer())}
+                />
               </View>
+              </View>
+          )}
+          keyExtractor={item => item.id}
+
+      />
       </View>
+
+<View style={{flex: 1, justifyContent: "flex-end", position: "relative", marginLeft: scale(-10), marginBottom: verticalScale(-125) }}>
+                <Image source={require("./sahpe.png")} resizeMode="contain" />
+                
+              </View> 
 
           </Screen>
         </View>

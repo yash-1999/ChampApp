@@ -15,6 +15,7 @@ import {
 } from '@react-navigation/drawer';
 
 import { AuthContext } from '../components/context/context';
+import { useStores } from "../models"
 
 //const bowserLogo = require("./l1.png")
 
@@ -32,6 +33,19 @@ export function DrawerContent(props) {
     //const nextScreen = () => navigation.navigate("dashboard")
     const { signOut } = React.useContext(AuthContext);
     
+    const { catagoryData } = useStores();
+    function list() {
+        return catagoryData.mainCatagory.map((data) => {
+          return (
+            
+              <DrawerItem 
+                        
+              label={data.name}
+              onPress={() => {navigation.navigate('drawer')}}
+          />
+          )
+        })
+    }
   
     return (
         <View style={{flex:1}}>
@@ -44,6 +58,7 @@ export function DrawerContent(props) {
                         label="Dashboard"
                         onPress={() => {navigation.navigate('drawer')}}
                     />
+                      {list()}
                     {/* <DrawerItem 
                         
                         label="Profile"
