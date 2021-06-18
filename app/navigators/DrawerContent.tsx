@@ -29,7 +29,7 @@ import { AuthContext } from '../components/context/context';
  
 export function DrawerContent(props) {
     const navigation = useNavigation()
-    const nextScreen = () => navigation.navigate("dashboard")
+    //const nextScreen = () => navigation.navigate("dashboard")
     const { signOut } = React.useContext(AuthContext);
     
   
@@ -41,8 +41,8 @@ export function DrawerContent(props) {
 
                     <DrawerItem 
                         
-                        label="Home"
-                        onPress={() => {props.navigation.navigate('DashBoardScreen')}}
+                        label="Dashboard"
+                        onPress={() => {navigation.navigate('drawer')}}
                     />
                     {/* <DrawerItem 
                         

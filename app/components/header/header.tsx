@@ -7,8 +7,10 @@ import { Icon } from "../icon/icon"
 import { spacing } from "../../theme"
 import { translate } from "../../i18n/"
 import { scale, verticalScale } from "../../utils/scale"
+import { useNavigation, DrawerActions } from "@react-navigation/native"
 
-const Logo = require("./menu.png")
+const Logo = require("./hamburger.png")
+const BACK = require("./back.png")
 // static styles
 const ROOT: ViewStyle = {
   flexDirection: "row",
@@ -25,8 +27,8 @@ const TITLE_MIDDLE: ViewStyle = { flex: 1, justifyContent: "center" }
 const LEFT: ViewStyle = { width: scale(32) }
 const RIGHT: ViewStyle = { width: scale(32) }
 const LOGO: ImageStyle = {
-  //width: scale(66.7),
-  //height: verticalScale(66.7),
+  width: scale(20.7),
+  height: verticalScale(15),
    //marginHorizontal: scale(0.6),
    resizeMode: "contain",
   }
@@ -47,11 +49,14 @@ export function Header(props: HeaderProps) {
   } = props
   const header = headerText || (headerTx && translate(headerTx)) || ""
 
+
+  const navigation = useNavigation()
   return (
     <View style={[ROOT, style]}>
       {leftIcon ? (
         <Button preset="link" onPress={onLeftPress}>
-          <Icon icon={leftIcon} />
+          {/* <Icon icon={leftIcon} /> */}
+          <Image source={BACK} style={LOGO} />
         </Button>
       ) : (
         <View style={LEFT} />
@@ -60,9 +65,9 @@ export function Header(props: HeaderProps) {
         <Text style={[TITLE, titleStyle]} text={header} />
       </View>
       {rightIcon ? (
-        <Button preset="link" onPress={onRightPress}>
+        <Button preset="link" onPress={() => navigation.dispatch(DrawerActions.openDrawer())}>
           {/* <Icon icon={rightIcon} /> */}
-          <Image source={Logo} style={LOGO}/>
+          <Image source={Logo} style={LOGO} />
         </Button>
       ) : (
         <View style={RIGHT} />

@@ -73,7 +73,7 @@ const BOWSER: ImageStyle = {
     textAlign: "left"
   }
 
-  export const DashBoardScreen = observer(function DashBoardScreen() {
+  export const MyProfileScreen = observer(function MyProfileScreen() {
     const navigation = useNavigation()
     //const nextScreen = () => navigation.navigate("demo")
 
@@ -87,13 +87,13 @@ const BOWSER: ImageStyle = {
           <Wallpaper preset="cover" />
           <Screen style={CONTAINER} preset="fixed" backgroundColor={color.transparent}>
               <Header 
-                          headerTx="dashBoardScreen.dashboard"
+                          headerTx="myProfileScreen.myprofile"
                           //leftIcon="back"
                           rightIcon="back"
               />
               <View style={{ flex: 1, justifyContent: 'center' }}>
-        <Text style={{color:"black"}}>Dashboard!</Text>
-        <View style={{flex: 1, justifyContent: "flex-end", position: "relative", marginLeft: scale(-10), marginBottom: verticalScale(-125) }}>
+        <Text style={{color:"black"}}>Profile!</Text>
+        <View style={{flex: 1, justifyContent: "flex-end", position: "relative", marginLeft: scale(187), marginBottom: verticalScale(-125) }}>
                 <Image source={require("./sahpe.png")} resizeMode="contain" />
                 {/* <Image source={require("./sahpe.png")} resizeMode="contain" /> */}
               </View>

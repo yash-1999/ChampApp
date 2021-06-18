@@ -35,6 +35,10 @@
     "dashboard": "Dashboard",
     "welcome": "Welcome Back,"
   },
+  "myProfileScreen": {
+    "myprofile": "Profile",
+    "welcome": "Welcome Back,"
+  },
   "storybook": {
     "placeholder": "Placeholder",
     "field": "Field"
