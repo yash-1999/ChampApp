@@ -35,6 +35,10 @@
     "dashboard": "Dashboard",
     "welcome": "Welcome Back,"
   },
+  "subCatagoryScreen": {
+    "prepare": "Prepare"
+    
+  },
   "myProfileScreen": {
     "myprofile": "Profile",
     "welcome": "Welcome Back,"

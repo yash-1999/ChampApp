@@ -10,7 +10,8 @@ api.setup()
 export const CatagoryModel = types
   .model("Catagory")
   .props({
-    mainCatagory : types.optional(types.frozen(),[])
+    mainCatagory : types.optional(types.frozen(),[]),
+    subCatagory : types.optional(types.frozen(),[])
   })
   .views((self) => ({})) // eslint-disable-line @typescript-eslint/no-unused-vars
   .actions((self) => ({
@@ -19,6 +20,19 @@ export const CatagoryModel = types
       if(data.kind == "ok") {
         //console.tron.log(data.catagoryData);
         self.mainCatagory = data.catagoryData.data;
+        return true;
+      }
+      else {
+        console.log("error");
+        return false;
+      }
+    }),
+
+    getSubCatagoryData: flow(function* getSubCatagoryData(id: number){
+      const data = yield api.getSubCatagoriesById(id)
+      if(data.kind == "ok") {
+        //console.tron.log(data.catagoryData);
+        self.subCatagory = data.catagoryData.data;
         return true;
       }
       else {

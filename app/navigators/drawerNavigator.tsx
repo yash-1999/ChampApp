@@ -6,7 +6,7 @@
  */
  import React from "react"
  import { createStackNavigator } from "@react-navigation/stack"
- import { WelcomeScreen, DemoScreen, DemoListScreen, SplashScreen, LoginScreen, DashBoardScreen } from "../screens"
+ import { WelcomeScreen, DemoScreen, DemoListScreen, SplashScreen, LoginScreen, DashBoardScreen, SubCatagoryScreen, MediaScreen } from "../screens"
  
  /**
   * This type allows TypeScript to know what routes are defined in this navigator
@@ -27,6 +27,8 @@
 //    demo: undefined
 //    demoList: undefined
    dashboard: undefined
+   subcatagory: undefined
+   media: undefined
  }
  
  // Documentation: https://reactnavigation.org/docs/stack-navigator/
@@ -42,6 +44,8 @@
        {/* <Stack.Screen name="splash" component={SplashScreen} /> */}
        {/* <Stack.Screen name="login" component={LoginScreen} /> */}
        <Stack.Screen name="dashboard" component={DashBoardScreen} />
+       <Stack.Screen name="subcatagory" component={SubCatagoryScreen} />
+       <Stack.Screen name="media" component={MediaScreen} />
        {/* <Stack.Screen name="welcome" component={WelcomeScreen} />
        <Stack.Screen name="demo" component={DemoScreen} />
        <Stack.Screen name="demoList" component={DemoListScreen} /> */}

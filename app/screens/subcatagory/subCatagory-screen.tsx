@@ -1,6 +1,6 @@
 import React, { useState,useEffect, useCallback } from "react"
 import { View, Image, ViewStyle, TextStyle, ImageStyle, SafeAreaView, StatusBar, TouchableOpacity, FlatList } from "react-native"
-import { DrawerActions, useIsFocused, useNavigation } from "@react-navigation/native"
+import { DrawerActions, useIsFocused, useNavigation, useRoute } from "@react-navigation/native"
 import { observer } from "mobx-react-lite"
 import { Button, Header, Screen, Text, Wallpaper } from "../../components"
 import { color, spacing, typography } from "../../theme"
@@ -25,6 +25,11 @@ const BOWSER: ImageStyle = {
     maxWidth: scale(85.3),
     maxHeight: 85.3,
   }
+  const APIIMG: ImageStyle = {
+    height:verticalScale(66.7),
+     width: scale(66.7), 
+     borderRadius: 50
+  }
   const WALL: ImageStyle = {
     //alignSelf: "center",
     //marginVertical: spacing[5],
@@ -44,12 +49,14 @@ const BOWSER: ImageStyle = {
     //marginLeft: 33.3,
     marginHorizontal: scale(33.3),
     justifyContent: "space-around",
-    paddingVertical: verticalScale(181.3),
+    
+    paddingVertical: verticalScale(160.3),
+    marginBottom: verticalScale(80.7)
      //maxHeight: verticalScale(53.3) ,
       //maxWidth: 308.3 
   }
   const FOOTER: ViewStyle = {
-    marginTop: verticalScale(16.7), 
+    marginTop: verticalScale(28.7), 
     //marginLeft: 33.3,
     //marginHorizontal: scale(33.3),
      //maxHeight: verticalScale(53.3) ,
@@ -73,8 +80,18 @@ const BOWSER: ImageStyle = {
     //marginTop: 20.7,
     textAlign: "left"
   }
+  const APITEXT: TextStyle = {
+    ...TEXT,
+    
+    paddingHorizontal: scale(18.7), 
+    alignSelf:"center", 
+    fontSize: scale(20) ,
+    letterSpacing: scale(0.5),
+    textAlign: "left",
+    //marginTop: verticalScale(10.7)
+  }
 
-  export const DashBoardScreen = observer(function DashBoardScreen() {
+  export const SubCatagoryScreen = observer(function SubCatagoryScreen() {
     const navigation = useNavigation()
     //const nextScreen = () => navigation.navigate("demo")
 
@@ -93,6 +110,29 @@ const BOWSER: ImageStyle = {
       [],
     );
 
+    // function parent({route}) {
+    //     const { parentId } = route.params;
+    //     return(
+    //         console.tron.log(JSON.stringify(parentId))
+    //     );
+    // }
+    const route = useRoute();
+    const { parentId } = newFunction(route);
+    //const { name } = newFunction(route);
+       // console.tron.log("h",parentId)
+    let subCatagoryObj = catagoryData.mainCatagory.find(x => x.id == parentId);
+    console.tron.log(subCatagoryObj.children)
+
+    const apiData = subCatagoryObj.children;
+    console.tron.log("subc no apidata",apiData);
+
+    const headerName = subCatagoryObj.name;
+    
+
+    //const [isData, setIsData] = React.useState();
+    //setIsData(subCatagoryObj.children);
+
+
     return (
       <View style={FULL}>
           <StatusBar
@@ -102,8 +142,8 @@ const BOWSER: ImageStyle = {
           <Wallpaper preset="cover" />
           <Screen style={CONTAINER} preset="fixed" backgroundColor={color.transparent}>
               <Header 
-                          headerTx="dashBoardScreen.dashboard"
-                          //leftIcon="back"
+                          headerText={headerName}
+                          leftIcon="back"
                           rightIcon="back"
               />
               {/* <View style={{ flex: 1, justifyContent: 'center' }}>
@@ -117,29 +157,36 @@ const BOWSER: ImageStyle = {
       
       <View style={FOOTER_CONTENT}>
       <FlatList 
-          data = {catagoryData.mainCatagory}
+          //data = {catagoryData.mainCatagory}
+          data = { apiData }
           renderItem={({item}) => (
             // <View>
             //   <Text style={{ fontSize: 20, color: 'white' }}>{item.name}</Text>
             // </View>
             <View style={FOOTER}>
               <View>
-                <Button
+                {/* <Button
                   style={CONTINUE}
                   textStyle={CONTINUE_TEXT}
-                  // tx="welcomeScreen.continue"
+                  
                   text={item.name}
-                  //onPress={nextScreen}
-                  //onPress={() => {loginHandle( data.username, data.password )}}
-                  //onPress={() => navigation.dispatch(DrawerActions.openDrawer())}
-                  onPress={() => {navigation.navigate('subcatagory',{ parentId: item.id })}}
-                />
+                 
+                  onPress={() => navigation.dispatch(DrawerActions.openDrawer())}
+                /> */}
+                <TouchableOpacity onPress={() => {navigation.navigate('media',{ sname: item.name, parent_Id: item.parent_id, orData: item.id })}}>
+                <View style={{flexDirection: "row"}}>
+                <Image source={{
+                     uri: String(item.icon),
+                    }} resizeMode="contain" style={APIIMG} />
+                <Text style={APITEXT}>{item.name}</Text></View>
+                </TouchableOpacity>
               </View>
               </View>
           )}
           keyExtractor={item => item.id}
 
       />
+      
       </View>
 
 <View style={{flex: 1, justifyContent: "flex-end", position: "relative", marginLeft: scale(-10), marginBottom: verticalScale(-125) }}>
@@ -151,3 +198,7 @@ const BOWSER: ImageStyle = {
         </View>
   )
 })
+
+function newFunction(route): { parentId: any } {
+    return route.params
+}

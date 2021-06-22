@@ -5,5 +5,7 @@ export * from "./splash/splash-screen"
 export * from "./login/login-screen"
 export * from "./dashboard/dashboard-screen"
 export * from "./myprofile/myprofile-screen"
+export * from "./subcatagory/subCatagory-screen"
+export * from "./media/media-screen"
 //export * from "./tabBar/tabBar-screen"
 // export other screens here

@@ -41,7 +41,7 @@ export function DrawerContent(props) {
               <DrawerItem 
                         
               label={data.name}
-              onPress={() => {navigation.navigate('drawer')}}
+              onPress={() => {navigation.navigate('subcatagory')}}
           />
           )
         })
@@ -56,7 +56,7 @@ export function DrawerContent(props) {
                     <DrawerItem 
                         
                         label="Dashboard"
-                        onPress={() => {navigation.navigate('drawer')}}
+                        onPress={() => {navigation.navigate('dashboard')}}
                     />
                       {list()}
                     {/* <DrawerItem 
