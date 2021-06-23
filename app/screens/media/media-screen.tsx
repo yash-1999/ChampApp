@@ -9,8 +9,8 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { styles } from "react-native-fbsdk-next/types/FBLoginButton"
 import { TabNavigator, DrawerContent } from "../../navigators"
 import { useStores } from "../../models"
-import Swiper from 'react-native-swiper'
-import {FlatListSlider} from 'react-native-flatlist-slider';
+//import Swiper from 'react-native-swiper'
+//import {FlatListSlider} from 'react-native-flatlist-slider';
 import Carousel, { Pagination } from 'react-native-snap-carousel';
 import { number } from "mobx-state-tree/dist/internal"
 const { height, width } = Dimensions.get('window');
