@@ -1,5 +1,5 @@
 import React, { useState,useEffect, useCallback, useRef  } from "react"
-import { View, Image, ViewStyle, TextStyle, ImageStyle, SafeAreaView, StatusBar,Alert, TouchableOpacity, FlatList, Dimensions } from "react-native"
+import { View, Image, ViewStyle, TextStyle, ImageStyle, SafeAreaView,ScrollView, StatusBar,Alert, TouchableOpacity, FlatList, Dimensions } from "react-native"
 import { DrawerActions, useIsFocused, useNavigation, useRoute } from "@react-navigation/native"
 import { observer } from "mobx-react-lite"
 import { Button, Header, Next, Screen, Text, Wallpaper } from "../../components"
@@ -13,7 +13,7 @@ import Swiper from 'react-native-swiper'
 import {FlatListSlider} from 'react-native-flatlist-slider';
 import Carousel, { Pagination } from 'react-native-snap-carousel';
 import { number } from "mobx-state-tree/dist/internal"
-//const { height, width } = Dimensions.get('window');
+const { height, width } = Dimensions.get('window');
 import HTML from "react-native-render-html";
 import YoutubePlayer from "react-native-youtube-iframe";
 
@@ -52,14 +52,15 @@ const BOWSER: ImageStyle = {
     //marginTop: verticalScale(33.3), 
     //marginLeft: 33.3,
     marginHorizontal: scale(33.3),
-    justifyContent: "space-around",
+    justifyContent: "center",
     //backgroundColor: "white"
     //paddingVertical: verticalScale(181.3),
      //maxHeight: verticalScale(53.3) ,
       //maxWidth: 308.3 
   }
   const FOOTER: ViewStyle = {
-    marginTop: verticalScale(16.7), 
+    
+    //marginTop: verticalScale(16.7), 
     //marginLeft: 33.3,
     //marginHorizontal: scale(33.3),
      //maxHeight: verticalScale(53.3) ,
@@ -138,7 +139,7 @@ const BOWSER: ImageStyle = {
     //const nextScreen = () => navigation.navigate("demo")
 
     const route = useRoute();
-    const { sname,parent_Id,orData } = newFunction(route);
+    const { sname,parent_Id,orData, type } = newFunction(route);
     //console.tron.log("he",sname);
 
 
@@ -164,17 +165,7 @@ const BOWSER: ImageStyle = {
       [],
     );
 
-    const images = [
-      {
-       image:'https://images.unsplash.com/photo-1567226475328-9d6baaf565cf?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=400&q=60',
-       desc: 'Silent Waters in the mountains in midst of Himilayas',
-      },
-     {
-       image:'https://images.unsplash.com/photo-1455620611406-966ca6889d80?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1130&q=80',
-       desc:
-         'Red fort in India New Delhi is a magnificient masterpeiece of humans',
-     },
-     ]
+    
 
      //const [img, setImg] = React.useState(images);
      const [detail, setDetail] = React.useState([]);
@@ -215,55 +206,33 @@ const BOWSER: ImageStyle = {
       setPlaying((prev) => !prev);
     }, []);
 
-      console.tron.log("apidata", apiData);
+      console.tron.log("apidata", apiData[0].url);
 
-      // function video(){
-      //   let videoData = apiData.url.toString();
-      //   let newData= videoData.replace("https://youtu.be/","");
-      //     return(
-      //       <>
-      //       <YoutubePlayer
-      //   height={300}
-      //   play={playing}
-      //   videoId={newData}
-      //   onChangeState={onStateChange}
-      // />
-      // <Button text={playing ? "pause" : "play"} onPress={togglePlaying} />
-      // <HTML baseFontStyle={{fontSize: scale(17.3),color: "rgb(255, 255, 255)"}} html={apiData.description} />
-
-      // </>
-      //     );
-      // }
-
+      function video(){
+        let videoData = apiData[0].url.toString();
+        let newData= videoData.replace("https://youtu.be/","");
+          return(
+            <>
+            <ScrollView style={{ height:verticalScale(height-70)}}>
+            <YoutubePlayer
+        height={175}
+        play={playing}
+        videoId={newData}
+        onChangeState={onStateChange}
+      />
+      <Button text={playing ? "pause" : "play"} onPress={togglePlaying} />
+      <HTML baseFontStyle={{fontSize: scale(17.3),color: "rgb(255, 255, 255)"}} html={apiData[0].description} />
+      </ScrollView>
+      </>
+            
       
+          );
+      }
 
-    return (
-      <View style={FULL}>
-          <StatusBar
-            backgroundColor="transparent"
-            translucent={true}
-            />
-          <Wallpaper preset="cover" />
-          <Screen style={CONTAINER} preset="fixed" backgroundColor={color.transparent}>
-              <Header 
-                          headerText={sname}
-                          leftIcon="back"
-                          rightIcon="back"
-              />
-              <Next 
-                          
-                          leftIcon="back"
-                          rightIcon="back"
-              />
-              
-
-      
-      <View style={FOOTER_CONTENT}>
-
-          
-        {/* {video()} */}
-      
-      {/* <Carousel
+      function image(){
+        return(
+          <>
+              <Carousel
               ref={null}
               data={ apiData }
               renderItem={({item, index}) => {
@@ -305,7 +274,46 @@ const BOWSER: ImageStyle = {
               }}
               
               inactiveDotScale={1}
-            /> */}
+            /> 
+            </>
+        );
+      }
+
+      
+
+    return (
+      <View style={FULL}>
+          <StatusBar
+            backgroundColor="transparent"
+            translucent={true}
+            />
+          <Wallpaper preset="cover" />
+          <Screen style={CONTAINER} preset="fixed" backgroundColor={color.transparent}>
+              <Header 
+                          headerText={sname}
+                          leftIcon="back"
+                          rightIcon="back"
+              />
+              <Next 
+                          
+                          leftIcon="back"
+                          rightIcon="back"
+              />
+              
+
+      
+      <View style={FOOTER_CONTENT}>
+      { String(type) !== "Video" ? (
+        image()
+      )
+    :
+      video()
+    }
+      
+       
+        
+       
+      
 
            
       
@@ -321,6 +329,6 @@ const BOWSER: ImageStyle = {
   )
 })
 
-function newFunction(route): { sname: any, parent_Id: any, orData: any } {
+function newFunction(route): { sname: any, parent_Id: any, orData: any, type: any } {
     return route.params
 }

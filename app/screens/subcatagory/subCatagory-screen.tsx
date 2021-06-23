@@ -173,7 +173,7 @@ const BOWSER: ImageStyle = {
                  
                   onPress={() => navigation.dispatch(DrawerActions.openDrawer())}
                 /> */}
-                <TouchableOpacity onPress={() => {navigation.navigate('media',{ sname: item.name, parent_Id: item.parent_id, orData: item.id })}}>
+                <TouchableOpacity onPress={() => {navigation.navigate('media',{ sname: item.name, parent_Id: item.parent_id, orData: item.id, type: item.type })}}>
                 <View style={{flexDirection: "row"}}>
                 <Image source={{
                      uri: String(item.icon),
