@@ -27,8 +27,13 @@ const BOWSER: ImageStyle = {
   }
   const APIIMG: ImageStyle = {
     height:verticalScale(66.7),
-     width: scale(66.7), 
-     borderRadius: 50
+     width: scale(66.7),
+     //borderColor: "rgb(238, 206, 0)",
+     //borderWidth: scale(1),
+     //borderTopLeftRadius: 200,
+     borderRadius: 40,
+     //tintColor: "rgb(238, 206, 0)",
+     
   }
   const WALL: ImageStyle = {
     //alignSelf: "center",
@@ -121,6 +126,7 @@ const BOWSER: ImageStyle = {
     //const { name } = newFunction(route);
        // console.tron.log("h",parentId)
     let subCatagoryObj = catagoryData.mainCatagory.find(x => x.id == parentId);
+    console.tron.log("hi1",subCatagoryObj);
     console.tron.log(subCatagoryObj.children)
 
     const apiData = subCatagoryObj.children;

@@ -144,28 +144,30 @@ const BOWSER: ImageStyle = {
 
 
     const { catagoryData } = useStores();
-    const isFocused = useIsFocused()
+    const isFocused = useIsFocused();
+    const [mediaArray, setMediaArray] = React.useState([]);
     useEffect(() => {
-      if(isFocused){
-        catagoryData.getSubCatagoryData(parent_Id);
-        console.tron.log("he",parent_Id,catagoryData.subCatagory);
-        //console.tron.log("he",catagoryData.getMainCategoryData(0));
-      }
+      ;(async () => {
+        if(isFocused){
+         await catagoryData.getSubCatagoryData(parent_Id);
+          console.tron.log("he",parent_Id,catagoryData.subCatagory);
+          //console.tron.log("he",catagoryData.getMainCategoryData(0));\
+          let parentMediaCatagoryObj = catagoryData.subCatagory.find(x => x.parentID == parent_Id);
+          let mediaCatagoryObj = parentMediaCatagoryObj.media.find(x => x.id == orData);
+          console.tron.log("he2",mediaCatagoryObj)
+          console.tron.log("media",mediaCatagoryObj.media)
+          setMediaArray(mediaCatagoryObj.media);
+          //const apiData = mediaCatagoryObj.media;
+        }
+      })()
+      
        
     },[isFocused]) 
 
     //let mediaCatagoryObj = catagoryData.subCatagory.find(x => x.parent_id == parent_Id);
-    let mediaCatagoryObj = catagoryData.subCatagory.find(x => x.id == orData);
-    console.tron.log("media",mediaCatagoryObj.media)
 
-    const apiData = mediaCatagoryObj.media;
   
-    const extractKey = useCallback(
-      ({ id }) => '' + id,
-      [],
-    );
 
-    
 
      //const [img, setImg] = React.useState(images);
      const [detail, setDetail] = React.useState([]);
@@ -179,8 +181,8 @@ const BOWSER: ImageStyle = {
       console.tron.log("detail",detail);
 
       function list() {
-        console.tron.log("list",apiData)
-        return apiData.map((data) => {
+        console.tron.log("list",mediaArray)
+        return mediaArray.map((data) => {
           
           return (
             
@@ -206,10 +208,10 @@ const BOWSER: ImageStyle = {
       setPlaying((prev) => !prev);
     }, []);
 
-      console.tron.log("apidata", apiData[0].url);
+      console.tron.log("apidata", mediaArray[0].url);
 
       function video(){
-        let videoData = apiData[0].url.toString();
+        let videoData = mediaArray[0].url.toString();
         let newData= videoData.replace("https://youtu.be/","");
           return(
             <>
@@ -221,7 +223,7 @@ const BOWSER: ImageStyle = {
         onChangeState={onStateChange}
       />
       <Button text={playing ? "pause" : "play"} onPress={togglePlaying} />
-      <HTML baseFontStyle={{fontSize: scale(17.3),color: "rgb(255, 255, 255)"}} html={apiData[0].description} />
+      <HTML baseFontStyle={{fontSize: scale(17.3),color: "rgb(255, 255, 255)"}} html={mediaArray[0].description} />
       </ScrollView>
       </>
             
@@ -234,7 +236,7 @@ const BOWSER: ImageStyle = {
           <>
               <Carousel
               ref={null}
-              data={ apiData }
+              data={ mediaArray }
               renderItem={({item, index}) => {
                 return (
                     <View >
@@ -254,7 +256,7 @@ const BOWSER: ImageStyle = {
               onSnapToItem={(index) => setActiveSlide(index) }
             />
             <Pagination
-              dotsLength={apiData.length}
+              dotsLength={mediaArray.length}
               activeDotIndex={activeSlide}
               
               dotStyle={{

@@ -15,6 +15,8 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { AuthContext } from '../components/context/context';
 import { Wallpaper,Screen } from '../components'
 import { color } from '../theme'
+import { observer } from "mobx-react-lite";
+import { useStores } from "../models";
 /**
  * This type allows TypeScript to know what routes are defined in this navigator
  * as well as what properties (if any) they might take when navigating to them.
@@ -32,41 +34,44 @@ export type RootParamList = {
 
 const Stack = createStackNavigator<RootParamList>()
 
-const RootStack = () => {
+const RootStack = observer(() => {
+  const {catagoryData} = useStores();
   return (
     <Stack.Navigator
       screenOptions={{
         headerShown: false,
       }}
     >
-      <Stack.Screen
+      {catagoryData.userToken !== "" ? (<Stack.Screen
         name="mainStack"
         component={MainNavigator}
         options={{
           headerShown: false,
         }}
-      />
-    </Stack.Navigator>
-  )
-}
-
-const TabStack = () => {
-  return (
-    <Stack.Navigator
-      screenOptions={{
-        headerShown: false,
-      }}
-    >
-      <Stack.Screen
+      />) : (<Stack.Screen
         name="tabStack"
         component={TabNavigator}
         options={{
           headerShown: false,
         }}
-      />
+      />)}
+      
     </Stack.Navigator>
   )
-}
+
+})
+
+// const TabStack = () => {
+//   return (
+//     <Stack.Navigator
+//       screenOptions={{
+//         headerShown: false,
+//       }}
+//     >
+      
+//     </Stack.Navigator>
+//   )
+// }
 
 export const RootNavigator = React.forwardRef<
   NavigationContainerRef,
@@ -89,116 +94,117 @@ export const RootNavigator = React.forwardRef<
   //    detectLogin()
   // },[])
 
-  const initialLoginState = {
-    isLoading: true,
-    userName: null,
-    userToken: null,
-  };
+  // const initialLoginState = {
+  //   isLoading: true,
+  //   userName: null,
+  //   userToken: null,
+  // };
 
-  const loginReducer = (prevState, action) => {
-    switch( action.type ) {
-      case 'RETRIEVE_TOKEN': 
-        return {
-          ...prevState,
-          userToken: action.token,
-          isLoading: false,
-        };
-      case 'LOGIN': 
-        return {
-          ...prevState,
-          userName: action.id,
-          userToken: action.token,
-          isLoading: false,
-        };
-      case 'LOGOUT': 
-        return {
-          ...prevState,
-          userName: null,
-          userToken: null,
-          isLoading: false,
-        };
-      case 'REGISTER': 
-        return {
-          ...prevState,
-          userName: action.id,
-          userToken: action.token,
-          isLoading: false,
-        };
-    }
-  };
+  // const loginReducer = (prevState, action) => {
+  //   switch( action.type ) {
+  //     case 'RETRIEVE_TOKEN': 
+  //       return {
+  //         ...prevState,
+  //         userToken: action.token,
+  //         isLoading: false,
+  //       };
+  //     case 'LOGIN': 
+  //       return {
+  //         ...prevState,
+  //         userName: action.id,
+  //         userToken: action.token,
+  //         isLoading: false,
+  //       };
+  //     case 'LOGOUT': 
+  //       return {
+  //         ...prevState,
+  //         userName: null,
+  //         userToken: null,
+  //         isLoading: false,
+  //       };
+  //     case 'REGISTER': 
+  //       return {
+  //         ...prevState,
+  //         userName: action.id,
+  //         userToken: action.token,
+  //         isLoading: false,
+  //       };
+  //   }
+  // };
 
-  const [loginState, dispatch] = React.useReducer(loginReducer, initialLoginState);
+  // const [loginState, dispatch] = React.useReducer(loginReducer, initialLoginState);
 
-  const authContext = React.useMemo(() => ({
-    signIn: async(foundUser) => {
-      // setUserToken('fgkj');
-      // setIsLoading(false);
-      const userToken = String(foundUser[0].userToken);
-      const userName = foundUser[0].username;
+  // const authContext = React.useMemo(() => ({
+  //   signIn: async(foundUser) => {
+  //     // setUserToken('fgkj');
+  //     // setIsLoading(false);
+  //     const userToken = String(foundUser[0].userToken);
+  //     const userName = foundUser[0].username;
       
-      try {
-        await AsyncStorage.setItem('userToken', userToken);
-      } catch(e) {
-        console.log(e);
-      }
-      // console.log('user token: ', userToken);
-      dispatch({ type: 'LOGIN', id: userName, token: userToken });
-    },
-    signOut: async() => {
-      // setUserToken(null);
-      // setIsLoading(false);
-      try {
-        await AsyncStorage.removeItem('userToken');
-      } catch(e) {
-        console.log(e);
-      }
-      dispatch({ type: 'LOGOUT' });
-    },
-    signUp: () => {
-      // setUserToken('fgkj');
-      // setIsLoading(false);
-    },
+  //     try {
+  //       await AsyncStorage.setItem('userToken', userToken);
+  //     } catch(e) {
+  //       console.log(e);
+  //     }
+  //     // console.log('user token: ', userToken);
+  //     dispatch({ type: 'LOGIN', id: userName, token: userToken });
+  //   },
+  //   signOut: async() => {
+  //     // setUserToken(null);
+  //     // setIsLoading(false);
+  //     try {
+  //       await AsyncStorage.removeItem('userToken');
+  //     } catch(e) {
+  //       console.log(e);
+  //     }
+  //     dispatch({ type: 'LOGOUT' });
+  //   },
+  //   signUp: () => {
+  //     // setUserToken('fgkj');
+  //     // setIsLoading(false);
+  //   },
     
-  }), []);
+  // }), []);
 
-  useEffect(() => {
-    setTimeout(async() => {
-      // setIsLoading(false);
-      let userToken;
-      userToken = null;
-      try {
-        userToken = await AsyncStorage.getItem('userToken');
-      } catch(e) {
-        console.log(e);
-      }
-      // console.log('user token: ', userToken);
-      dispatch({ type: 'RETRIEVE_TOKEN', token: userToken });
-    }, 1000);
-  }, []);
+  // useEffect(() => {
+  //   setTimeout(async() => {
+  //     // setIsLoading(false);
+  //     let userToken;
+  //     userToken = null;
+  //     try {
+  //       userToken = await AsyncStorage.getItem('userToken');
+  //     } catch(e) {
+  //       console.log(e);
+  //     }
+  //     // console.log('user token: ', userToken);
+  //     dispatch({ type: 'RETRIEVE_TOKEN', token: userToken });
+  //   }, 1000);
+  // }, []);
 
-  if( loginState.isLoading ) {
-    return(
-      <View style={{flex:1,justifyContent:'center',alignItems:'center',backgroundColor: color.background}}>
-        <ActivityIndicator size="large"/>
-        {/* <Wallpaper preset="cover" />
-          <Screen style={{backgroundColor: color.transparent}} preset="fixed" backgroundColor={color.transparent}>
-            </Screen> */}
-      </View>
-    );
-  }
+  // if( loginState.isLoading ) {
+  //   return(
+  //     <View style={{flex:1,justifyContent:'center',alignItems:'center',backgroundColor: color.background}}>
+  //       <ActivityIndicator size="large"/>
+  //       {/* <Wallpaper preset="cover" />
+  //         <Screen style={{backgroundColor: color.transparent}} preset="fixed" backgroundColor={color.transparent}>
+  //           </Screen> */}
+  //     </View>
+  //   );
+  // }
 
   return (
-    <AuthContext.Provider value={authContext}>
+    // <AuthContext.Provider >
     <NavigationContainer {...props} ref={ref}>
       {/* <RootStack /> */}
-      { loginState.userToken !== null ? (
+      {/* { loginState.userToken !== null ? (
         <TabStack />
       )
     :
       <RootStack />
-    }
+    } */}
+    <RootStack />
     </NavigationContainer>
-    </AuthContext.Provider>
+    // </AuthContext.Provider>
   )
 })
 

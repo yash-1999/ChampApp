@@ -17,6 +17,7 @@ import { Colors } from "react-native/Libraries/NewAppScreen"
 
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { AuthContext } from '../../components/context/context';
+import { CatagoryModel, useStores } from "../../models"
 
 const bowserLogo = require("./l1.png")
 
@@ -253,6 +254,9 @@ export const LoginScreen = observer(function LoginScreen() {
     const navigation = useNavigation()
     //const nextScreen = () => navigation.navigate("demo")
 
+    const { catagoryData } = useStores();
+    
+
     const Users = [
       {
           id: 1, 
@@ -352,7 +356,7 @@ export const LoginScreen = observer(function LoginScreen() {
     );
   };
 
-  const { signIn } = React.useContext(AuthContext);
+  //const { signIn } = React.useContext(AuthContext);
 
   const textInputChange = (val) => {
     const reg = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
@@ -522,7 +526,8 @@ const loginHandle = (userName, password) => {
       ]);
       return;
   }
-  signIn(foundUser);
+  //signIn(foundUser);
+  catagoryData.authUser("token");
   //if ( data.username == "user1" || data.password == "password" ) 
   //else{
     // Alert.alert('User detail is correct!', 'correct details.', [

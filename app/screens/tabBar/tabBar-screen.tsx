@@ -29,7 +29,7 @@ import { AuthContext } from '../../components/context/context';
 export const TabBarScreen = observer(function TabBarScreen(props) {
     const navigation = useNavigation()
     const nextScreen = () => navigation.navigate("dashboard")
-    const { signOut } = React.useContext(AuthContext);
+    //const { signOut } = React.useContext(AuthContext);
     
   
     return (
@@ -72,7 +72,7 @@ export const TabBarScreen = observer(function TabBarScreen(props) {
             <DrawerItem 
                 
                 label="Sign Out"
-                onPress={() => {signOut()}}
+                onPress={() => {console.log()}}
             />
         
     </View>

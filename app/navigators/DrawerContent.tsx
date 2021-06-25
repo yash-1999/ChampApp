@@ -31,7 +31,8 @@ import { useStores } from "../models"
 export function DrawerContent(props) {
     const navigation = useNavigation()
     //const nextScreen = () => navigation.navigate("dashboard")
-    const { signOut } = React.useContext(AuthContext);
+    //const { signOut } = React.useContext(AuthContext);
+    
     
     const { catagoryData } = useStores();
     function list() {
@@ -87,7 +88,8 @@ export function DrawerContent(props) {
             <DrawerItem 
                 
                 label="Sign Out"
-                onPress={() => {signOut()}}
+                //onPress={() => {signOut()}}
+                onPress={() => {catagoryData.authUser("")}}
             />
         
     </View>
