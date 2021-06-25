@@ -69,31 +69,32 @@ export class Api {
       //   id: response.data.id,
       //   name: response.data.name,
       // }
+      
       return { kind: "ok", catagoryData: response.data }
     } catch {
       return { kind: "bad-data" }
     }
   }
 
-  async getSubCatagoriesById(id: number): Promise<Types.GetUserResult> {
-    // make the api call
-    const response: ApiResponse<any> = await this.apisauce.get(`/category/${id}`)
+  // async getSubCatagoriesById(id: number): Promise<Types.GetUserResult> {
+  //   // make the api call
+  //   const response: ApiResponse<any> = await this.apisauce.get(`/category/${id}`)
 
-    // the typical ways to die when calling an api
-    if (!response.ok) {
-      const problem = getGeneralApiProblem(response)
-      if (problem) return problem
-    }
+  //   // the typical ways to die when calling an api
+  //   if (!response.ok) {
+  //     const problem = getGeneralApiProblem(response)
+  //     if (problem) return problem
+  //   }
 
-    // transform the data into the format we are expecting
-    try {
-      // const resultUser: Types.User = {
-      //   id: response.data.id,
-      //   name: response.data.name,
-      // }
-      return { kind: "ok", catagoryData: response.data }
-    } catch {
-      return { kind: "bad-data" }
-    }
-  }
+  //   // transform the data into the format we are expecting
+  //   try {
+  //     // const resultUser: Types.User = {
+  //     //   id: response.data.id,
+  //     //   name: response.data.name,
+  //     // }
+  //     return { kind: "ok", catagoryData: response.data }
+  //   } catch {
+  //     return { kind: "bad-data" }
+  //   }
+  // }
 }

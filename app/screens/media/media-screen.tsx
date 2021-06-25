@@ -147,27 +147,31 @@ const BOWSER: ImageStyle = {
     const isFocused = useIsFocused();
     const [mediaArray, setMediaArray] = React.useState([]);
     useEffect(() => {
-      ;(async () => {
+      console.tron.log("mainArray",mediaArray);
+      // ;(async () => {
         if(isFocused){
-         await catagoryData.getSubCatagoryData(parent_Id);
-          console.tron.log("he",parent_Id,catagoryData.subCatagory);
-          //console.tron.log("he",catagoryData.getMainCategoryData(0));\
-          let parentMediaCatagoryObj = catagoryData.subCatagory.find(x => x.parentID == parent_Id);
-          let mediaCatagoryObj = parentMediaCatagoryObj.media.find(x => x.id == orData);
-          console.tron.log("he2",mediaCatagoryObj)
-          console.tron.log("media",mediaCatagoryObj.media)
-          setMediaArray(mediaCatagoryObj.media);
+         loadData()
           //const apiData = mediaCatagoryObj.media;
         }
-      })()
+     // })()
       
        
     },[isFocused]) 
 
     //let mediaCatagoryObj = catagoryData.subCatagory.find(x => x.parent_id == parent_Id);
-
+    console.tron.log("list",mediaArray);
+    const loadData = () => {
+       catagoryData.getSubCatagoryData(parent_Id);
+      console.tron.log("he",parent_Id,catagoryData.subCatagory);
+      //console.tron.log("he",catagoryData.getMainCategoryData(0));\
+      let parentMediaCatagoryObj = catagoryData.subCatagory.find(x => x.parentID == parent_Id);
+      let mediaCatagoryObj = parentMediaCatagoryObj.media.find(x => x.id == orData);
+      console.tron.log("he2",mediaCatagoryObj)
+      console.tron.log("media",mediaCatagoryObj.media)
+      setMediaArray(mediaCatagoryObj.media);
+    }
   
-
+    
 
      //const [img, setImg] = React.useState(images);
      const [detail, setDetail] = React.useState([]);
@@ -193,22 +197,22 @@ const BOWSER: ImageStyle = {
           )
         })
     }
-    const [activeSlide,setActiveSlide] = React.useState(0);
+      const [activeSlide,setActiveSlide] = React.useState(0);
+      
+      const [playing, setPlaying] = useState(false);
+
+      const onStateChange = useCallback((state) => {
+        if (state === "ended") {
+          setPlaying(false);
+          Alert.alert("video has finished playing!");
+        }
+      }, []);
     
-    const [playing, setPlaying] = useState(false);
+      const togglePlaying = useCallback(() => {
+        setPlaying((prev) => !prev);
+      }, []);
 
-    const onStateChange = useCallback((state) => {
-      if (state === "ended") {
-        setPlaying(false);
-        Alert.alert("video has finished playing!");
-      }
-    }, []);
-  
-    const togglePlaying = useCallback(() => {
-      setPlaying((prev) => !prev);
-    }, []);
-
-      console.tron.log("apidata", mediaArray[0].url);
+      //console.tron.log("apidata", mediaArray[0].url);
 
       function video(){
         let videoData = mediaArray[0].url.toString();

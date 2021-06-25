@@ -12,12 +12,12 @@ export const CatagoryModel = types
   .props({
     mainCatagory : types.optional(types.frozen(),[]),
     userToken: types.optional(types.string,""),
-    subCatagory : types.optional(types.frozen(),[])
+    subCatagory : types.optional(types.array(types.frozen()),[])
   })
   .views((self) => ({})) // eslint-disable-line @typescript-eslint/no-unused-vars
   .actions((self) => ({
     authUser(token:string){
-      self.userToken == token;
+      self.userToken = token;
     },
 
     getMainCategoryData: flow(function* getMainCategoryData(id: number) {
@@ -34,17 +34,18 @@ export const CatagoryModel = types
     }),
 
     getSubCatagoryData: flow(function* getSubCatagoryData(id: number){
-      const data = yield api.getSubCatagoriesById(id)
+      const data = yield api.getCatagoriesById(id)
+      console.tron.log("hello",data);
       if(data.kind == "ok") {
-        //console.tron.log(data.catagoryData);
-        let index = self.subCatagory.findIndex(x => x.parentID == id)
-        if( index == -1){
-          self.subCatagory.push({ parentID: id, media: data.catagoryData.data  })
-        }
-        else{
-          self.subCatagory[index] = data.catagoryData.data;
-        }
-
+        
+        // let index = self.subCatagory.findIndex(x => x.parentID == id)
+        // if( index == -1){
+        //   self.subCatagory.push({ parentID: id, media: data.catagoryData.data  })
+        // }
+        // else{
+        //   self.subCatagory[index] = data.catagoryData.data;
+        // }
+        console.tron.log("data.catagorydata",data.catagoryData);
         
         return true;
       }

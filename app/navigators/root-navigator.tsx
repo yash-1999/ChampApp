@@ -42,7 +42,7 @@ const RootStack = observer(() => {
         headerShown: false,
       }}
     >
-      {catagoryData.userToken !== "" ? (<Stack.Screen
+      {catagoryData.userToken == "" ? (<Stack.Screen
         name="mainStack"
         component={MainNavigator}
         options={{
