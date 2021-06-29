@@ -182,7 +182,7 @@ export function MainTabBar() {
     
     <Tab.Screen
       name="Dashboard"
-      component={DrawerStack}
+      component={DrawerNavigator}
       //barStyle={{backgroundColor: 'tomato'}}
       options={{
         tabBarLabel: 'Dashboard',

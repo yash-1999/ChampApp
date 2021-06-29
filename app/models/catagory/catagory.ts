@@ -21,10 +21,12 @@ export const CatagoryModel = types
     },
 
     getMainCategoryData: flow(function* getMainCategoryData(id: number) {
+      console.tron.log("id",id);
       const data = yield api.getCatagoriesById(id)
       if(data.kind == "ok") {
-        //console.tron.log(data.catagoryData);
+        
         self.mainCatagory = data.catagoryData.data;
+        console.tron.log("self.maincatagory",self.mainCatagory);
         return true;
       }
       else {
@@ -38,13 +40,13 @@ export const CatagoryModel = types
       console.tron.log("hello",data);
       if(data.kind == "ok") {
         
-        // let index = self.subCatagory.findIndex(x => x.parentID == id)
-        // if( index == -1){
-        //   self.subCatagory.push({ parentID: id, media: data.catagoryData.data  })
-        // }
-        // else{
-        //   self.subCatagory[index] = data.catagoryData.data;
-        // }
+        let index = self.subCatagory.findIndex(x => x.parentID == id)
+        if( index == -1){
+          self.subCatagory.push({ parentID: id, media: data.catagoryData.data  })
+        }
+        else{
+          self.subCatagory[id] = data.catagoryData.data;
+        }
         console.tron.log("data.catagorydata",data.catagoryData);
         
         return true;

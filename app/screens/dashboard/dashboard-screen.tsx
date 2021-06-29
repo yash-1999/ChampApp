@@ -83,15 +83,12 @@ const BOWSER: ImageStyle = {
     useEffect(() => {
       if(isFocused){
         catagoryData.getMainCategoryData(0);
-        console.tron.log("hi",catagoryData.mainCatagory)
+        //console.tron.log("hi",catagoryData.mainCatagory)
       }
        
     },[isFocused]) 
   
-    const extractKey = useCallback(
-      ({ id }) => '' + id,
-      [],
-    );
+    
 
     return (
       <View style={FULL}>

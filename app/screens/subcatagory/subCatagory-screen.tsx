@@ -27,11 +27,12 @@ const BOWSER: ImageStyle = {
   }
   const APIIMG: ImageStyle = {
     height:verticalScale(66.7),
-     width: scale(66.7),
-     //borderColor: "rgb(238, 206, 0)",
-     //borderWidth: scale(1),
+     width: verticalScale(66.7),
+     
+     borderColor: "rgb(238, 206, 0)",
+     borderWidth: scale(2),
      //borderTopLeftRadius: 200,
-     borderRadius: 40,
+     borderRadius: 360,
      //tintColor: "rgb(238, 206, 0)",
      
   }
@@ -102,29 +103,32 @@ const BOWSER: ImageStyle = {
 
     const { catagoryData } = useStores();
     const isFocused = useIsFocused()
+    const route = useRoute();
+    const { parentId } = newFunction(route);
+    console.tron.log("parentId",parentId);
+
     useEffect(() => {
       if(isFocused){
-        catagoryData.getMainCategoryData(0);
-        console.tron.log("hi",catagoryData.mainCatagory)
+        //catagoryData.getMainCategoryData(parentId);
+        //console.tron.log("hi",catagoryData.mainCatagory)
+        catagoryData.getSubCatagoryData(parentId);
+        console.tron.log("subcatagory data",catagoryData.subCatagory)
+
+        // let subCatagoryObj = catagoryData.mainCatagory.find(x => x.id == parentId);
+        // console.tron.log("hi1",subCatagoryObj);
+        // console.tron.log(subCatagoryObj.children)
+    
+        // const apiData = subCatagoryObj.children;
+        // console.tron.log("subc no apidata",apiData);
+    
+        // const headerName = subCatagoryObj.name;
       }
        
     },[isFocused]) 
   
-    const extractKey = useCallback(
-      ({ id }) => '' + id,
-      [],
-    );
-
-    // function parent({route}) {
-    //     const { parentId } = route.params;
-    //     return(
-    //         console.tron.log(JSON.stringify(parentId))
-    //     );
-    // }
-    const route = useRoute();
-    const { parentId } = newFunction(route);
-    //const { name } = newFunction(route);
-       // console.tron.log("h",parentId)
+  
+   
+    
     let subCatagoryObj = catagoryData.mainCatagory.find(x => x.id == parentId);
     console.tron.log("hi1",subCatagoryObj);
     console.tron.log(subCatagoryObj.children)
@@ -183,7 +187,7 @@ const BOWSER: ImageStyle = {
                 <View style={{flexDirection: "row"}}>
                 <Image source={{
                      uri: String(item.icon),
-                    }} resizeMode="contain" style={APIIMG} />
+                    }}  style={APIIMG} />
                 <Text style={APITEXT}>{item.name}</Text></View>
                 </TouchableOpacity>
               </View>

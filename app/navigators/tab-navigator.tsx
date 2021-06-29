@@ -15,7 +15,9 @@ export function TabNavigator() {
       backgroundColor: 'black',
       width: 240,
       
-    }} drawerContent={props => <DrawerContent {...props} />}>
+    }}
+    //  drawerContent={props => <DrawerContent {...props} />}
+    >
           <Drawer.Screen name="mainTabBar" component={MainTabBar} />
           
         </Drawer.Navigator>
