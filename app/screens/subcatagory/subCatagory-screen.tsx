@@ -1,5 +1,5 @@
 import React, { useState,useEffect, useCallback } from "react"
-import { View, Image, ViewStyle, TextStyle, ImageStyle, SafeAreaView, StatusBar, TouchableOpacity, FlatList } from "react-native"
+import { View, Image, ViewStyle, TextStyle, ImageStyle, SafeAreaView, StatusBar, TouchableOpacity, FlatList, ActivityIndicator } from "react-native"
 import { DrawerActions, useIsFocused, useNavigation, useRoute } from "@react-navigation/native"
 import { observer } from "mobx-react-lite"
 import { Button, Header, Screen, Text, Wallpaper } from "../../components"
@@ -106,13 +106,20 @@ const BOWSER: ImageStyle = {
     const route = useRoute();
     const { parentId } = newFunction(route);
     console.tron.log("parentId",parentId);
+    //const [isLoading,setIsLoading] = React.useState(false)
 
     useEffect(() => {
       if(isFocused){
         //catagoryData.getMainCategoryData(parentId);
         //console.tron.log("hi",catagoryData.mainCatagory)
-        catagoryData.getSubCatagoryData(parentId);
-        console.tron.log("subcatagory data",catagoryData.subCatagory)
+
+
+
+        // let status=catagoryData.getSubCatagoryData(parentId);
+        // console.tron.log("subcatagory data",catagoryData.subCatagory)
+        loadSubCatagoryData()
+
+
 
         // let subCatagoryObj = catagoryData.mainCatagory.find(x => x.id == parentId);
         // console.tron.log("hi1",subCatagoryObj);
@@ -126,7 +133,14 @@ const BOWSER: ImageStyle = {
        
     },[isFocused]) 
   
-  
+  const loadSubCatagoryData = async () => {
+    //setIsLoading(true)
+    console.tron.log("apicall started");
+    let status= await catagoryData.getSubCatagoryData(parentId);
+    console.tron.log("apicall ended");
+    //setIsLoading(false)
+        console.tron.log("subcatagory data",catagoryData.subCatagory)
+  }
    
     
     let subCatagoryObj = catagoryData.mainCatagory.find(x => x.id == parentId);
@@ -156,6 +170,12 @@ const BOWSER: ImageStyle = {
                           leftIcon="back"
                           rightIcon="back"
               />
+
+            {/* {isLoading &&
+              <View style={{position:"absolute",top:0, bottom:0, left:0, right:0, backgroundColor:"rgba(0,0,0,0.5)"}}>
+                <ActivityIndicator size="large" color="white" style={{flex:1, justifyContent:"center", alignItems:"center"}} />
+              </View>
+              } */}
               {/* <View style={{ flex: 1, justifyContent: 'center' }}>
         <Text style={{color:"black"}}>Dashboard!</Text> */}
         {/* <View style={{flex: 1, justifyContent: "flex-end", position: "relative", marginLeft: scale(-10), marginBottom: verticalScale(-125) }}>

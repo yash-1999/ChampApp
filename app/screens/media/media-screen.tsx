@@ -182,10 +182,21 @@ export const MediaScreen = observer(function MediaScreen() {
       let mediaCatagoryObj = parentMediaCatagoryObj.media.find(x => x.id == orData);
     console.tron.log("he2",mediaCatagoryObj)
     console.tron.log("media",mediaCatagoryObj.media)
-    setMediaArray(mediaCatagoryObj.media);
-    
+    //setMediaArray(mediaCatagoryObj.media);
 
-  }, [])
+
+    let newArray = mediaCatagoryObj.media.map((item) => {
+      return { ...item, parentID: parent_Id }
+    })
+    console.tron.log("newArray",newArray);
+    setMediaArray(newArray);
+
+    catagoryData.getVisitedSubCatagory(newArray[0]);
+    console.tron.log("visitedSubCatagory data",catagoryData.visitedSubCatagory)
+
+  }, [parent_Id,orData])
+
+
 
   //let mediaCatagoryObj = catagoryData.subCatagory.find(x => x.parent_id == parent_Id);
   
