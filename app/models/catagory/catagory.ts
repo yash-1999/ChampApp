@@ -12,7 +12,7 @@ export const CatagoryModel = types
   .props({
     mainCatagory : types.optional(types.frozen(),[]),
     userToken: types.optional(types.string,""),
-    subCatagory : types.optional(types.array(types.frozen()),[]),
+    subCatagory : types.optional(types.frozen(),[]),
     visitedSubCatagory : types.optional(types.frozen(),[]),
   })
   .views((self) => ({})) // eslint-disable-line @typescript-eslint/no-unused-vars
@@ -43,10 +43,15 @@ export const CatagoryModel = types
         
         let index = self.subCatagory.findIndex(x => x.parentID == id)
         if( index == -1){
-          self.subCatagory.push({ parentID: id, media: data.catagoryData.data  })
+          //self.subCatagory.push({ parentID: id, media: data.catagoryData.data  })
+          let newObject = { parentID: id, media: data.catagoryData.data  }
+          console.tron.log("newObject", newObject);
+          self.subCatagory = [...self.subCatagory,newObject]
         }
         else{
-          self.subCatagory[id] = data.catagoryData.data;
+        //   let tempArray = [...self.subCatagory];
+        //  tempArray[index] = data.catagoryData.data;
+        //  self.subCatagory = tempArray;
         }
         console.tron.log("data.catagorydata",data.catagoryData);
         

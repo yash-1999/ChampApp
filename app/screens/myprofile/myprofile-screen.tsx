@@ -13,6 +13,7 @@ import { TabNavigator, DrawerContent } from "../../navigators"
 import Accordion from 'react-native-collapsible/Accordion';
 import * as Animatable from 'react-native-animatable';
 import Collapsible from 'react-native-collapsible';
+import { useStores } from "../../models"
 
 const FULL: ViewStyle = { flex: 1, flexDirection: "column", backgroundColor: color.background}
 const CONTAINER: ViewStyle = {
@@ -155,6 +156,15 @@ const SELECTORS = [
   export const MyProfileScreen = observer(function MyProfileScreen() {
     const navigation = useNavigation()
     //const nextScreen = () => navigation.navigate("demo")
+
+    const { catagoryData } = useStores();
+    //const isFocused = useIsFocused();
+    const [mediaArray, setMediaArray] = React.useState([]);
+
+    console.tron.log("visitedSubCatagory data",catagoryData.visitedSubCatagory);
+    let prepareObj = catagoryData.visitedSubCatagory.find(x => x.parentID == 1);
+    
+    console.tron.log("prepareObj",prepareObj);
 
     const [activeSections, setActiveSections] = React.useState([]);
     const [collapsed, setCollapsed] = React.useState(true);
